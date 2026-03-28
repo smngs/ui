@@ -11,7 +11,7 @@ const preview: Preview = {
       values: [
         { name: "site", value: "#f6f6f6" },
         { name: "white", value: "#ffffff" },
-        { name: "dark", value: "#2f2f2f" },
+        { name: "dark", value: "#222222" },
       ],
     },
     controls: {
