@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
   AlertDialog, AlertDialogContent, AlertDialogTrigger,
@@ -44,9 +46,46 @@ export default function App() {
   const [radioVal, setRadioVal] = useState("react");
   const [progress] = useState(65);
   const [collOpen, setCollOpen] = useState(false);
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+    }
+  }, [isDark]);
 
   return (
     <ToastProvider>
+      <button
+        onClick={() => setIsDark((d) => !d)}
+        aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+        style={{
+          position: "fixed",
+          top: "var(--space-2)",
+          right: "var(--space-2)",
+          zIndex: "var(--z-spacer)" as React.CSSProperties["zIndex"],
+          background: "var(--color-surface)",
+          border: "1px solid var(--color-border)",
+          borderRadius: "var(--radius-sm)",
+          color: "var(--color-text)",
+          cursor: "pointer",
+          fontSize: "var(--text-sm)",
+          fontFamily: "inherit",
+          fontWeight: "var(--font-medium)" as React.CSSProperties["fontWeight"],
+          padding: "0.5em 0.9em",
+          lineHeight: 1,
+          boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+          transition: "background-color 0.1s ease, color 0.1s ease, border-color 0.1s ease",
+          display: "flex",
+          alignItems: "center",
+          gap: "0.4em",
+        }}
+      >
+        <FontAwesomeIcon icon={isDark ? faSun : faMoon} />
+        {isDark ? "Light" : "Dark"}
+      </button>
       <div className="page">
 
         {/* Hero */}
@@ -65,40 +104,75 @@ export default function App() {
 
         {/* Color Palette */}
         <Section title="Color Palette">
-          <div className="token-grid">
-            {[
-              { token: "--color-brand",      hex: "#30a3b3", label: "Brand" },
-              { token: "--color-text",       hex: "#2f2f2f", label: "Text" },
-              { token: "--color-muted",      hex: "#555555", label: "Muted" },
-              { token: "--color-subtle",     hex: "#888888", label: "Subtle" },
-              { token: "--color-bg",         hex: "#f6f6f6", label: "Background" },
-              { token: "--color-bg-code",    hex: "#f4f5f6", label: "Code BG" },
-              { token: "--color-badge",      hex: "#5e5e5e", label: "Badge" },
-              { token: "--color-border",     hex: "#cccccc", label: "Border" },
-              { token: "--color-divider",    hex: "#e0e0e0", label: "Divider" },
-              { token: "--color-white",      hex: "#ffffff", label: "White" },
-              { token: "--color-success",    hex: "#30b582", label: "Success" },
-              { token: "--color-warning",    hex: "#ef9243", label: "Warning" },
-              { token: "--color-info",       hex: "#3063b5", label: "Info" },
-              { token: "--color-danger",     hex: "#e03c3c", label: "Danger" },
-            ].map(({ token, hex, label }) => {
-              const dark = ["#2f2f2f", "#555555", "#9b4dca", "#5e5e5e", "#606c76", "#30a3b3", "#30b582", "#3063b5", "#e03c3c"].includes(hex);
-              return (
-                <div key={token} className="token-swatch">
-                  <div
-                    className="token-swatch-color"
-                    style={{ background: `var(${token})`, color: dark ? "#f6f6f6" : "#2f2f2f" }}
-                  >
-                    {hex}
-                  </div>
-                  <div className="token-swatch-info">
-                    <div className="token-swatch-name">{label}</div>
-                    <div className="token-swatch-token">{token}</div>
-                  </div>
+          {(() => {
+            const palette = isDark ? {
+              accent: [
+                { token: "--color-brand",   hex: "#30a3b3", label: "Brand",   light: false },
+                { token: "--color-success", hex: "#34c98f", label: "Success", light: false },
+                { token: "--color-warning", hex: "#f4a44d", label: "Warning", light: false },
+                { token: "--color-info",    hex: "#4a7fd4", label: "Info",    light: false },
+                { token: "--color-danger",  hex: "#f05555", label: "Danger",  light: false },
+              ],
+              base: [
+                { token: "--color-text",     hex: "#e8e8e8", label: "Text",       light: true  },
+                { token: "--color-muted",    hex: "#aaaaaa", label: "Muted",      light: true  },
+                { token: "--color-subtle",   hex: "#777777", label: "Subtle",     light: false },
+                { token: "--color-bg",       hex: "#222222", label: "Background", light: false },
+                { token: "--color-bg-code",  hex: "#333333", label: "Code BG",    light: false },
+                { token: "--color-surface",  hex: "#2d2d2d", label: "Surface",    light: false },
+                { token: "--color-border",   hex: "#484848", label: "Border",     light: false },
+                { token: "--color-divider",  hex: "#3a3a3a", label: "Divider",    light: false },
+                { token: "--color-badge",    hex: "#5e5e5e", label: "Badge",      light: false },
+                { token: "--color-white",    hex: "#ffffff", label: "White",      light: true  },
+              ],
+            } : {
+              accent: [
+                { token: "--color-brand",   hex: "#30a3b3", label: "Brand",   light: false },
+                { token: "--color-success", hex: "#34c98f", label: "Success", light: false },
+                { token: "--color-warning", hex: "#f4a44d", label: "Warning", light: false },
+                { token: "--color-info",    hex: "#4a7fd4", label: "Info",    light: false },
+                { token: "--color-danger",  hex: "#f05555", label: "Danger",  light: false },
+              ],
+              base: [
+                { token: "--color-text",     hex: "#2f2f2f", label: "Text",       light: false },
+                { token: "--color-muted",    hex: "#555555", label: "Muted",      light: false },
+                { token: "--color-subtle",   hex: "#888888", label: "Subtle",     light: false },
+                { token: "--color-bg",       hex: "#f6f6f6", label: "Background", light: true  },
+                { token: "--color-bg-code",  hex: "#e8eaec", label: "Code BG",    light: true  },
+                { token: "--color-surface",  hex: "#ffffff", label: "Surface",    light: true  },
+                { token: "--color-border",   hex: "#cccccc", label: "Border",     light: true  },
+                { token: "--color-divider",  hex: "#e0e0e0", label: "Divider",    light: true  },
+                { token: "--color-badge",    hex: "#5e5e5e", label: "Badge",      light: false },
+                { token: "--color-white",    hex: "#ffffff", label: "White",      light: true  },
+              ],
+            };
+            const renderSwatch = ({ token, hex, label, light }: { token: string; hex: string; label: string; light: boolean }) => (
+              <div key={token} className="token-swatch">
+                <div
+                  className="token-swatch-color"
+                  style={{ background: `var(${token})`, color: light ? "#2f2f2f" : "#f6f6f6" }}
+                >
+                  {hex}
                 </div>
-              );
-            })}
-          </div>
+                <div className="token-swatch-info">
+                  <div className="token-swatch-name">{label}</div>
+                  <div className="token-swatch-token">{token}</div>
+                </div>
+              </div>
+            );
+            return (
+              <>
+                <div className="section-label">Brand &amp; Semantic</div>
+                <div className="token-grid" style={{ marginBottom: "var(--space-3)" }}>
+                  {palette.accent.map(renderSwatch)}
+                </div>
+                <div className="section-label">Base</div>
+                <div className="token-grid">
+                  {palette.base.map(renderSwatch)}
+                </div>
+              </>
+            );
+          })()}
         </Section>
 
         <Separator />
