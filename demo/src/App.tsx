@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { faSun, faMoon, faBars, faXmark, faCube } from "@fortawesome/free-solid-svg-icons";
+import { faReact, faTypescript } from "@fortawesome/free-brands-svg-icons";
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
   AlertDialog, AlertDialogContent, AlertDialogTrigger,
@@ -29,9 +30,9 @@ import {
   Tooltip,
 } from "@smngs/ui";
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({ title, id, children }: { title: string; id?: string; children: React.ReactNode }) {
   return (
-    <div className="section">
+    <div className="section" id={id}>
       <h2>{title}</h2>
       {children}
     </div>
@@ -46,7 +47,10 @@ export default function App() {
   const [radioVal, setRadioVal] = useState("react");
   const [progress] = useState(65);
   const [collOpen, setCollOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() =>
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  );
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     if (isDark) {
@@ -56,37 +60,58 @@ export default function App() {
     }
   }, [isDark]);
 
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const handler = (e: MediaQueryListEvent) => setIsDark(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
   return (
     <ToastProvider>
-      <button
-        onClick={() => setIsDark((d) => !d)}
-        aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-        style={{
-          position: "fixed",
-          top: "var(--space-2)",
-          right: "var(--space-2)",
-          zIndex: "var(--z-spacer)" as React.CSSProperties["zIndex"],
-          background: "var(--color-surface)",
-          border: "1px solid var(--color-border)",
-          borderRadius: "var(--radius-sm)",
-          color: "var(--color-text)",
-          cursor: "pointer",
-          fontSize: "var(--text-sm)",
-          fontFamily: "inherit",
-          fontWeight: "var(--font-medium)" as React.CSSProperties["fontWeight"],
-          padding: "0.5em 0.9em",
-          lineHeight: 1,
-          boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
-          transition: "background-color 0.1s ease, color 0.1s ease, border-color 0.1s ease",
-          display: "flex",
-          alignItems: "center",
-          gap: "0.4em",
-        }}
-      >
-        <FontAwesomeIcon icon={isDark ? faSun : faMoon} />
-        {isDark ? "Light" : "Dark"}
-      </button>
       <div className="page">
+
+        {/* Navbar */}
+        <div className="nav-spacer" aria-hidden="true" />
+        <nav className="site-nav">
+          <Avatar src="https://github.com/smngs.png" fallback="SM" size="sm" />
+          <a
+            href="https://github.com/smngs/ui"
+            target="_blank"
+            rel="noreferrer"
+            className="nav-title"
+          >
+            @smngs/ui
+          </a>
+          <div className="nav-right">
+            <div className="nav-links">
+              <a href="#color-palette">Color Palette</a>
+              <a href="#typography">Typography</a>
+              <a href="#button">Button</a>
+            </div>
+            <button
+              className="theme-toggle"
+              onClick={() => setIsDark((d) => !d)}
+              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              <FontAwesomeIcon icon={isDark ? faSun : faMoon} />
+            </button>
+            <button
+              className="hamburger"
+              onClick={() => setMenuOpen((o) => !o)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+            >
+              <FontAwesomeIcon icon={menuOpen ? faXmark : faBars} />
+            </button>
+          </div>
+          {menuOpen && (
+            <div className="nav-mobile-menu">
+              <a href="#color-palette" onClick={() => setMenuOpen(false)}>Color Palette</a>
+              <a href="#typography" onClick={() => setMenuOpen(false)}>Typography</a>
+              <a href="#button" onClick={() => setMenuOpen(false)}>Button</a>
+            </div>
+          )}
+        </nav>
 
         {/* Hero */}
         <div className="hero">
@@ -94,16 +119,16 @@ export default function App() {
             <h1>@smngs/ui</h1>
             <p>A Radix UI-based design system — 25 components</p>
             <div className="row">
-              <Badge asChild><a href="https://radix-ui.com" target="_blank" rel="noreferrer">Radix UI</a></Badge>
-              <Badge asChild><a href="https://www.typescriptlang.org" target="_blank" rel="noreferrer">TypeScript</a></Badge>
-              <Badge asChild><a href="https://react.dev" target="_blank" rel="noreferrer">React 18</a></Badge>
+              <Badge asChild><a href="https://radix-ui.com" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faCube} /> Radix UI</a></Badge>
+              <Badge asChild><a href="https://www.typescriptlang.org" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faTypescript} /> TypeScript</a></Badge>
+              <Badge asChild><a href="https://react.dev" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faReact} /> React 18</a></Badge>
             </div>
           </div>
-          <Avatar fallback="SM" size="lg" />
+          <Avatar src="https://github.com/smngs.png" fallback="SM" size="lg" />
         </div>
 
         {/* Color Palette */}
-        <Section title="Color Palette">
+        <Section title="Color Palette" id="color-palette">
           {(() => {
             const palette = isDark ? {
               accent: [
@@ -178,7 +203,7 @@ export default function App() {
         <Separator />
 
         {/* Typography */}
-        <Section title="Typography">
+        <Section title="Typography" id="typography">
           <h1>Heading 1 — The quick brown fox</h1>
           <h2>Heading 2 — The quick brown fox</h2>
           <h3>Heading 3 — The quick brown fox</h3>
@@ -209,11 +234,11 @@ export default function App() {
         <Separator />
 
         {/* Button */}
-        <Section title="Button">
+        <Section title="Button" id="button">
           <div className="row">
             <Button variant="primary">Primary</Button>
             <Button variant="ghost">Ghost</Button>
-            <Button variant="nav">Nav</Button>
+            <Button variant="danger">Danger</Button>
             <Button variant="primary" disabled>Disabled</Button>
             <Button variant="primary" asChild><a href="#top">Link</a></Button>
           </div>
