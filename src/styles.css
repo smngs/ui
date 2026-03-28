@@ -132,7 +132,7 @@ li:last-child { margin-bottom: 0; }
   justify-content: center;
   border-radius: 50%;
   border: 2px solid var(--color-border);
-  background-color: var(--color-white);
+  background-color: var(--color-surface);
   overflow: hidden;
   flex-shrink: 0;
   user-select: none;
@@ -175,7 +175,7 @@ li:last-child { margin-bottom: 0; }
 
 /* ===== Card ===== */
 .smngs-card {
-  background-color: var(--color-white);
+  background-color: var(--color-surface);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-divider);
   overflow: hidden;
@@ -233,7 +233,7 @@ li:last-child { margin-bottom: 0; }
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 9999;
-  background: var(--color-white);
+  background: var(--color-surface);
   border-radius: var(--radius-lg);
   padding: var(--space-4);
   width: min(90vw, 48rem);
@@ -286,7 +286,7 @@ li:last-child { margin-bottom: 0; }
 
 /* ===== Popover / HoverCard ===== */
 .smngs-popover-content {
-  background: var(--color-white);
+  background: var(--color-surface);
   border-radius: var(--radius-md);
   padding: var(--space-2) var(--space-3);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
@@ -297,7 +297,7 @@ li:last-child { margin-bottom: 0; }
   max-width: 32rem;
 }
 .smngs-popover-arrow {
-  fill: var(--color-white);
+  fill: var(--color-surface);
   filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
 }
 
@@ -414,7 +414,7 @@ li:last-child { margin-bottom: 0; }
 
 /* ===== Dropdown Menu ===== */
 .smngs-dropdown-content {
-  background: var(--color-white);
+  background: var(--color-surface);
   border: 1px solid var(--color-divider);
   border-radius: var(--radius-md);
   padding: var(--space-1) 0;
@@ -493,7 +493,7 @@ li:last-child { margin-bottom: 0; }
   position: absolute;
   top: 100%;
   left: 0;
-  background: var(--color-white);
+  background: var(--color-surface);
   border: 1px solid var(--color-divider);
   border-radius: var(--radius-md);
   padding: var(--space-2);
@@ -512,7 +512,7 @@ li:last-child { margin-bottom: 0; }
 .smngs-checkbox {
   width: 1.8rem;
   height: 1.8rem;
-  background: var(--color-white);
+  background: var(--color-surface);
   border: 2px solid var(--color-border);
   border-radius: var(--radius-sm);
   cursor: pointer;
@@ -549,7 +549,7 @@ li:last-child { margin-bottom: 0; }
 .smngs-radio-item {
   width: 1.8rem;
   height: 1.8rem;
-  background: var(--color-white);
+  background: var(--color-surface);
   border: 2px solid var(--color-border);
   border-radius: 50%;
   cursor: pointer;
@@ -597,7 +597,7 @@ li:last-child { margin-bottom: 0; }
   display: block;
   width: 1.8rem;
   height: 1.8rem;
-  background-color: var(--color-white);
+  background-color: var(--color-surface);
   border-radius: 50%;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   transition: transform var(--ease-fast);
@@ -614,7 +614,7 @@ li:last-child { margin-bottom: 0; }
   align-items: center;
   justify-content: space-between;
   gap: var(--space-2);
-  background: var(--color-white);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   padding: 0.5em var(--space-2);
@@ -636,7 +636,7 @@ li:last-child { margin-bottom: 0; }
   color: var(--color-subtle);
 }
 .smngs-select-content {
-  background: var(--color-white);
+  background: var(--color-surface);
   border: 1px solid var(--color-divider);
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -689,7 +689,7 @@ li:last-child { margin-bottom: 0; }
   display: block;
   width: 1.6rem;
   height: 1.6rem;
-  background-color: var(--color-white);
+  background-color: var(--color-surface);
   border: 2px solid var(--color-brand);
   border-radius: 50%;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
@@ -730,7 +730,7 @@ li:last-child { margin-bottom: 0; }
   display: flex;
   align-items: flex-start;
   gap: var(--space-2);
-  background: var(--color-white);
+  background: var(--color-surface);
   border: 1px solid var(--color-divider);
   border-radius: var(--radius-md);
   padding: var(--space-2) var(--space-3);
@@ -832,4 +832,55 @@ li:last-child { margin-bottom: 0; }
 /* ===== AspectRatio ===== */
 .smngs-aspect-ratio {
   overflow: hidden;
+}
+
+/* ===== Dark mode overrides ===== */
+
+[data-theme="dark"] .smngs-btn-ghost:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .smngs-dialog-overlay {
+  background-color: rgba(0, 0, 0, 0.65);
+}
+
+[data-theme="dark"] .smngs-dialog-close:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme="dark"] .smngs-dialog-content {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .smngs-popover-content,
+[data-theme="dark"] .smngs-dropdown-content,
+[data-theme="dark"] .smngs-nav-menu-content {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .smngs-dropdown-item:hover,
+[data-theme="dark"] .smngs-dropdown-item[data-highlighted] {
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme="dark"] .smngs-nav-menu-trigger:hover,
+[data-theme="dark"] .smngs-nav-menu-link:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+[data-theme="dark"] .smngs-accordion {
+  background-color: var(--color-surface);
+}
+
+[data-theme="dark"] .smngs-toast {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .smngs-slider-thumb:hover,
+[data-theme="dark"] .smngs-slider-thumb:focus {
+  box-shadow: 0 0 0 4px rgba(56, 184, 202, 0.35);
+}
+
+[data-theme="dark"] .smngs-switch-thumb {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
