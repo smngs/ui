@@ -1,5 +1,7 @@
 # @smngs/ui
 
+**Demo: https://smngs.github.io/ui/**
+
 A Radix UI-based design system built on CSS custom properties (design tokens), providing accessible components out of the box.
 
 ## Installation
