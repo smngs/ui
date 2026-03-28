@@ -1,0 +1,67 @@
+:root {
+  /* Colors */
+  --color-brand: #30a3b3;
+  --color-text: #2f2f2f;
+  --color-muted: #555555;
+  --color-subtle: #888888;
+  --color-bg: #f6f6f6;
+  --color-bg-code: #e8eaec;
+  --color-badge: #5e5e5e;
+  --color-badge-hover: #777777;
+  --color-border: #cccccc;
+  --color-divider: #e0e0e0;
+  --color-white: #ffffff;
+  --color-success: #30b582;
+  --color-warning: #ef9243;
+  --color-info: #3063b5;
+  --color-danger: #e03c3c;
+
+  /* Spacing */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  /* Typography */
+  --text-xs: 1.2rem;
+  --text-sm: 1.4rem;
+  --text-base: 1.6rem;
+  --text-lg: 1.8rem;
+  --text-xl: 2.4rem;
+  --text-2xl: 3.6rem;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-bold: 700;
+
+  /* Font families */
+  --font-sans: "M PLUS 1", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Line heights */
+  --leading-tight: 1.2;
+  --leading-normal: 1.6;
+  --leading-loose: 1.8;
+
+  /* Letter spacing */
+  --tracking-tight: -0.05rem;
+  --tracking-normal: 0rem;
+  --tracking-wide: 0.08em;
+
+  /* Transitions */
+  --ease-fast: 0.1s ease;
+
+  /* Layout */
+  --max-w-content: 112rem;
+  --max-w-layout: 150rem;
+  --page-pad-x: 2rem;
+  --header-pad-x: 1rem;
+  --header-top: 1rem;
+  --z-spacer: 999;
+  --z-header: 1000;
+}
