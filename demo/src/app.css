@@ -251,6 +251,46 @@ p { margin-top: 0; margin-bottom: var(--space-2); }
 .token-swatch-name { font-weight: var(--font-bold); margin-bottom: 0.2rem; }
 .token-swatch-token { font-family: monospace; color: var(--color-subtle); font-size: 1.1rem; }
 
+.token-swatch {
+  cursor: pointer;
+  transition: box-shadow var(--ease-fast);
+}
+
+.token-swatch:hover {
+  box-shadow: 0 0 0 2px var(--color-brand);
+}
+
+.token-swatch-active {
+  box-shadow: 0 0 0 2px var(--color-brand);
+}
+
+.token-swatch-usage {
+  display: none;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-divider);
+}
+
+.token-swatch:hover .token-swatch-usage,
+.token-swatch-active .token-swatch-usage {
+  display: block;
+}
+
+.token-swatch-usage-item {
+  font-size: 1.1rem;
+  color: var(--color-subtle);
+  line-height: 1.6;
+  padding-left: 0.8em;
+  position: relative;
+}
+
+.token-swatch-usage-item::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  color: var(--color-brand);
+}
+
 pre, img, table {
   max-width: 100%;
 }
