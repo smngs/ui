@@ -7,6 +7,7 @@ import {
   Button,
   Collapsible, CollapsibleContent, CollapsibleTrigger,
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
+  Menubar, MenubarContent, MenubarItem, MenubarLabel, MenubarMenu, MenubarSeparator, MenubarSub, MenubarSubContent, MenubarSubTrigger, MenubarTrigger,
   Navbar, NavbarTitle, NavbarLinks, NavbarRight, NavbarHamburger, NavbarMobileMenu, NavbarDropdownContent,
   NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuTrigger,
   Separator,
@@ -263,6 +264,79 @@ export function NavigationSection({ isDark }: { isDark: boolean }) {
     </NavigationMenuContent>
   </NavigationMenuItem>
 </NavigationMenu>
+        `} />
+      </Section>
+
+      <Separator />
+
+      {/* Menubar */}
+      <Section title="Menubar" id="menubar" level={3}>
+        <Menubar>
+          <MenubarMenu>
+            <MenubarTrigger>File</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>New</MenubarItem>
+              <MenubarItem>Open…</MenubarItem>
+              <MenubarItem>Save</MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem>Close</MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>Edit</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>Undo</MenubarItem>
+              <MenubarItem>Redo</MenubarItem>
+              <MenubarSeparator />
+              <MenubarLabel>Clipboard</MenubarLabel>
+              <MenubarItem>Cut</MenubarItem>
+              <MenubarItem>Copy</MenubarItem>
+              <MenubarItem>Paste</MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>Format</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem>Bold</MenubarItem>
+              <MenubarItem>Italic</MenubarItem>
+              <MenubarSeparator />
+              <MenubarSub>
+                <MenubarSubTrigger>List</MenubarSubTrigger>
+                <MenubarSubContent>
+                  <MenubarItem>Bulleted</MenubarItem>
+                  <MenubarItem>Numbered</MenubarItem>
+                </MenubarSubContent>
+              </MenubarSub>
+              <MenubarSeparator />
+              <MenubarItem disabled>Reset (disabled)</MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+        </Menubar>
+        <CodeBlock isDark={isDark} code={`
+<Menubar>
+  <MenubarMenu>
+    <MenubarTrigger>File</MenubarTrigger>
+    <MenubarContent>
+      <MenubarItem>New</MenubarItem>
+      <MenubarItem>Save</MenubarItem>
+      <MenubarSeparator />
+      <MenubarSub>
+        <MenubarSubTrigger>Export</MenubarSubTrigger>
+        <MenubarSubContent>
+          <MenubarItem>PDF</MenubarItem>
+        </MenubarSubContent>
+      </MenubarSub>
+    </MenubarContent>
+  </MenubarMenu>
+  <MenubarMenu>
+    <MenubarTrigger>Edit</MenubarTrigger>
+    <MenubarContent>
+      <MenubarLabel>Clipboard</MenubarLabel>
+      <MenubarItem>Cut</MenubarItem>
+      <MenubarItem>Copy</MenubarItem>
+    </MenubarContent>
+  </MenubarMenu>
+</Menubar>
         `} />
       </Section>
 

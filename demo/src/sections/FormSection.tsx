@@ -1,6 +1,8 @@
 import { useState } from "react";
 import {
+  Button,
   Checkbox,
+  Form, FormControl, FormField, FormLabel, FormMessage, FormSubmit,
   Label,
   RadioGroup, RadioGroupItem,
   Select,
@@ -147,6 +149,61 @@ export function FormSection({ isDark }: { isDark: boolean }) {
         <CodeBlock isDark={isDark} code={`
 <Label htmlFor="field">Email address</Label>
 <input id="field" type="email" />
+        `} />
+      </Section>
+
+      <Separator />
+
+      {/* Form (validation) */}
+      <Section title="Form (validation)" id="form-field" level={3}>
+        <div style={{ maxWidth: "28rem" }}>
+          <Form onSubmit={(e) => e.preventDefault()}>
+            <FormField name="email">
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <input
+                  type="email"
+                  required
+                  placeholder="you@example.com"
+                  style={{ width: "100%", padding: "var(--space-2) var(--space-3)", borderRadius: "var(--radius-md)", border: "1px solid var(--color-border)", background: "var(--color-bg-code)", color: "var(--color-text)", fontSize: "var(--text-sm)", fontFamily: "inherit" }}
+                />
+              </FormControl>
+              <FormMessage match="valueMissing">Email is required.</FormMessage>
+              <FormMessage match="typeMismatch">Please enter a valid email address.</FormMessage>
+            </FormField>
+            <FormField name="password">
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <input
+                  type="password"
+                  required
+                  minLength={8}
+                  placeholder="••••••••"
+                  style={{ width: "100%", padding: "var(--space-2) var(--space-3)", borderRadius: "var(--radius-md)", border: "1px solid var(--color-border)", background: "var(--color-bg-code)", color: "var(--color-text)", fontSize: "var(--text-sm)", fontFamily: "inherit" }}
+                />
+              </FormControl>
+              <FormMessage match="valueMissing">Password is required.</FormMessage>
+              <FormMessage match="tooShort">Must be at least 8 characters.</FormMessage>
+            </FormField>
+            <FormSubmit asChild>
+              <Button variant="primary">Sign In</Button>
+            </FormSubmit>
+          </Form>
+        </div>
+        <CodeBlock isDark={isDark} code={`
+<Form onSubmit={handleSubmit}>
+  <FormField name="email">
+    <FormLabel>Email</FormLabel>
+    <FormControl>
+      <input type="email" required placeholder="you@example.com" />
+    </FormControl>
+    <FormMessage match="valueMissing">Email is required.</FormMessage>
+    <FormMessage match="typeMismatch">Invalid email address.</FormMessage>
+  </FormField>
+  <FormSubmit asChild>
+    <Button variant="primary">Submit</Button>
+  </FormSubmit>
+</Form>
         `} />
       </Section>
 
