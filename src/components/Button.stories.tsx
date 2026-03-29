@@ -9,7 +9,7 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["primary", "ghost", "nav", "nav-active", "danger"],
+      options: ["primary", "ghost", "danger"],
     },
     disabled: { control: "boolean" },
   },
@@ -24,11 +24,6 @@ export const Primary: Story = {
 
 export const Ghost: Story = {
   args: { variant: "ghost", children: "Ghost" },
-};
-
-export const Nav: Story = {
-  args: { variant: "nav", children: "Nav" },
-  parameters: { backgrounds: { default: "dark" } },
 };
 
 export const Danger: Story = {
