@@ -1,4 +1,5 @@
 export { Avatar } from "./components/Avatar";
+export { Blockquote } from "./components/Blockquote";
 export { Badge } from "./components/Badge";
 export { Button } from "./components/Button";
 export { Card, CardHeader, CardBody } from "./components/Card";
@@ -41,3 +42,4 @@ export { ToastProvider, Toast, ToastViewport } from "./components/Toast";
 export { Progress } from "./components/Progress";
 export { ScrollArea } from "./components/ScrollArea";
 export { AspectRatio } from "./components/AspectRatio";
+export { Grid, GridItem } from "./components/Grid";
