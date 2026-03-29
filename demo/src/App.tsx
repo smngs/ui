@@ -53,6 +53,7 @@ const TOC_ITEMS: TocItem[] = [
   { id: "dialog",       label: "Dialog",            level: 2 },
   { id: "popover",      label: "Popover / HoverCard", level: 2 },
   { id: "dropdown-menu",  label: "DropdownMenu",    level: 2 },
+  { id: "navbar",          label: "Navbar",            level: 2 },
   { id: "navigation-menu", label: "NavigationMenu", level: 2 },
   { id: "form",         label: "Form",              level: 2 },
   { id: "toast",        label: "Toast",             level: 2 },
@@ -799,6 +800,38 @@ export default function App() {
     <DropdownMenuItem disabled>Delete (disabled)</DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
+          `} />
+        </Section>
+
+        <Separator />
+
+        {/* Navbar */}
+        <Section title="Navbar" id="navbar">
+          <nav className="smngs-navbar">
+            <Avatar src="https://github.com/smngs.png" fallback="SM" size="sm" />
+            <a href="#navbar" className="smngs-navbar-title">@smngs/ui</a>
+            <div className="smngs-navbar-links">
+              <Button variant="nav" asChild><a href="#navbar">Home</a></Button>
+              <Button variant="nav-active" asChild><a href="#navbar">Docs</a></Button>
+              <Button variant="nav" asChild><a href="#navbar">Blog</a></Button>
+            </div>
+            <div className="smngs-navbar-right">
+              <Button variant="nav"><FontAwesomeIcon icon={faMoon} /></Button>
+            </div>
+          </nav>
+          <CodeBlock isDark={isDark} code={`
+<nav className="smngs-navbar">
+  <Avatar src="/avatar.png" fallback="SM" size="sm" />
+  <a href="/" className="smngs-navbar-title">My App</a>
+  <div className="smngs-navbar-links">
+    <Button variant="nav" asChild><a href="/">Home</a></Button>
+    <Button variant="nav-active" asChild><a href="/docs">Docs</a></Button>
+    <Button variant="nav" asChild><a href="/blog">Blog</a></Button>
+  </div>
+  <div className="smngs-navbar-right">
+    {/* icon buttons, theme toggle, etc. */}
+  </div>
+</nav>
           `} />
         </Section>
 
