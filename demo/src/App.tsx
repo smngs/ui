@@ -1,4 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Highlight } from "prism-react-renderer";
+import { lightTheme, darkTheme } from "./codeTheme";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSun, faMoon, faBars, faXmark, faCube } from "@fortawesome/free-solid-svg-icons";
+import { faReact, faTypescript } from "@fortawesome/free-brands-svg-icons";
 import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger,
   AlertDialog, AlertDialogContent, AlertDialogTrigger,
@@ -25,14 +30,98 @@ import {
   Tabs, TabsContent, TabsList, TabsTrigger,
   Toast, ToastProvider, ToastViewport,
   Tooltip,
+  Grid, GridItem,
 } from "@smngs/ui";
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+type TocItem = { id: string; label: string; level: 1 | 2 };
+
+const TOC_ITEMS: TocItem[] = [
+  { id: "color-palette", label: "Color Palette",   level: 1 },
+  { id: "typography",    label: "Typography",       level: 1 },
+  { id: "components",   label: "Components",        level: 1 },
+  { id: "button",       label: "Button",            level: 2 },
+  { id: "badge",        label: "Badge",             level: 2 },
+  { id: "avatar",       label: "Avatar",            level: 2 },
+  { id: "card",         label: "Card",              level: 2 },
+  { id: "tabs",         label: "Tabs",              level: 2 },
+  { id: "accordion",    label: "Accordion",         level: 2 },
+  { id: "collapsible",  label: "Collapsible",       level: 2 },
+  { id: "dialog",       label: "Dialog",            level: 2 },
+  { id: "popover",      label: "Popover / HoverCard", level: 2 },
+  { id: "dropdown-menu",  label: "DropdownMenu",    level: 2 },
+  { id: "navigation-menu", label: "NavigationMenu", level: 2 },
+  { id: "form",         label: "Form",              level: 2 },
+  { id: "toast",        label: "Toast",             level: 2 },
+  { id: "grid",         label: "Grid",              level: 2 },
+  { id: "progress",     label: "Progress",          level: 2 },
+  { id: "scroll-area",  label: "ScrollArea",        level: 2 },
+  { id: "tooltip",      label: "Tooltip",           level: 2 },
+];
+
+function Toc({ activeId, onSelect }: { activeId: string; onSelect: (id: string) => void }) {
   return (
-    <div className="section">
-      <h2>{title}</h2>
+    <aside className="toc">
+      <div className="toc-title">Contents</div>
+      <nav>
+        <ul className="toc-list">
+          {TOC_ITEMS.map((item) => (
+            <li key={item.id} className={`toc-item toc-item-h${item.level}${activeId === item.id ? " toc-item-active" : ""}`}>
+              <a href={`#${item.id}`} onClick={() => onSelect(item.id)}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
+  );
+}
+
+function Section({ title, id, level = 2, children }: { title: string; id?: string; level?: 1 | 2; children: React.ReactNode }) {
+  const Heading = `h${level}` as "h1" | "h2";
+  return (
+    <div className="section" id={id}>
+      <Heading>{title}</Heading>
       {children}
     </div>
+  );
+}
+
+function CodeBlock({ code, isDark }: { code: string; isDark: boolean }) {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <Collapsible open={open} onOpenChange={setOpen}>
+      <CollapsibleTrigger asChild>
+        <button className="code-block-trigger">
+          <span>Usage</span>
+          <span className="code-block-chevron" style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}>▾</span>
+        </button>
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <Highlight theme={isDark ? darkTheme : lightTheme} code={code.trim()} language="tsx">
+          {({ className, style, tokens, getLineProps, getTokenProps }) => (
+            <pre
+              className={className}
+              style={{
+                ...style,
+                borderRadius: "0 0 var(--radius-md) var(--radius-md)",
+                padding: "var(--space-3)",
+                overflowX: "auto",
+                fontSize: "var(--text-sm)",
+                lineHeight: "var(--leading-loose)",
+                margin: 0,
+              }}
+            >
+              {tokens.map((line, i) => (
+                <div key={i} {...getLineProps({ line })}>
+                  {line.map((token, key) => (
+                    <span key={key} {...getTokenProps({ token })} />
+                  ))}
+                </div>
+              ))}
+            </pre>
+          )}
+        </Highlight>
+      </CollapsibleContent>
+    </Collapsible>
   );
 }
 
@@ -44,10 +133,121 @@ export default function App() {
   const [radioVal, setRadioVal] = useState("react");
   const [progress] = useState(65);
   const [collOpen, setCollOpen] = useState(false);
+  const [isDark, setIsDark] = useState(() =>
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  );
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeId, setActiveId] = useState("");
+  const suppressObserver = React.useRef(false);
+  const suppressTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+    }
+  }, [isDark]);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const handler = (e: MediaQueryListEvent) => setIsDark(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    const checkActive = () => {
+      if (suppressObserver.current) return;
+      const elements = TOC_ITEMS
+        .map((item) => document.getElementById(item.id))
+        .filter(Boolean) as HTMLElement[];
+      const threshold = 80; // scroll-margin-top(6rem=60px) + buffer
+      let current = "";
+      for (const el of elements) {
+        if (el.getBoundingClientRect().top <= threshold) {
+          current = el.id;
+        }
+      }
+      if (current) setActiveId(current);
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        checkActive();
+      });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    checkActive();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <ToastProvider>
+      <div className="layout">
+      <Toc activeId={activeId} onSelect={(id) => {
+        setActiveId(id);
+        suppressObserver.current = true;
+        if (suppressTimer.current) clearTimeout(suppressTimer.current);
+
+        const liftSuppress = () => {
+          suppressObserver.current = false;
+        };
+        window.addEventListener("scrollend", liftSuppress, { once: true });
+        // scrollend が発火しない環境用のフォールバック
+        suppressTimer.current = setTimeout(() => {
+          window.removeEventListener("scrollend", liftSuppress);
+          suppressObserver.current = false;
+        }, 2000);
+      }} />
       <div className="page">
+
+        {/* Navbar */}
+        <div className="nav-spacer" aria-hidden="true" />
+        <nav className="site-nav">
+          <Avatar src="https://github.com/smngs.png" fallback="SM" size="sm" />
+          <a
+            href="https://github.com/smngs/ui"
+            target="_blank"
+            rel="noreferrer"
+            className="nav-title"
+          >
+            @smngs/ui
+          </a>
+          <div className="nav-right">
+            <div className="nav-links">
+              <a href="#color-palette">Color Palette</a>
+              <a href="#typography">Typography</a>
+              <a href="#components">Components</a>
+            </div>
+            <button
+              className="theme-toggle"
+              onClick={() => setIsDark((d) => !d)}
+              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              <FontAwesomeIcon icon={isDark ? faSun : faMoon} />
+            </button>
+            <button
+              className="hamburger"
+              onClick={() => setMenuOpen((o) => !o)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+            >
+              <FontAwesomeIcon icon={menuOpen ? faXmark : faBars} />
+            </button>
+          </div>
+          {menuOpen && (
+            <div className="nav-mobile-menu">
+              <a href="#color-palette" onClick={() => setMenuOpen(false)}>Color Palette</a>
+              <a href="#typography" onClick={() => setMenuOpen(false)}>Typography</a>
+              <a href="#components" onClick={() => setMenuOpen(false)}>Components</a>
+            </div>
+          )}
+        </nav>
 
         {/* Hero */}
         <div className="hero">
@@ -55,56 +255,87 @@ export default function App() {
             <h1>@smngs/ui</h1>
             <p>A Radix UI-based design system — 25 components</p>
             <div className="row">
-              <Badge asChild><a href="https://radix-ui.com" target="_blank" rel="noreferrer">Radix UI</a></Badge>
-              <Badge asChild><a href="https://www.typescriptlang.org" target="_blank" rel="noreferrer">TypeScript</a></Badge>
-              <Badge asChild><a href="https://react.dev" target="_blank" rel="noreferrer">React 18</a></Badge>
+              <Badge asChild><a href="https://radix-ui.com" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faCube} /> Radix UI</a></Badge>
+              <Badge asChild><a href="https://www.typescriptlang.org" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faTypescript} /> TypeScript</a></Badge>
+              <Badge asChild><a href="https://react.dev" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faReact} /> React 18</a></Badge>
             </div>
           </div>
-          <Avatar fallback="SM" size="lg" />
+          <Avatar src="https://github.com/smngs.png" fallback="SM" size="lg" />
         </div>
 
         {/* Color Palette */}
-        <Section title="Color Palette">
-          <div className="token-grid">
-            {[
-              { token: "--color-brand",      hex: "#30a3b3", label: "Brand" },
-              { token: "--color-text",       hex: "#2f2f2f", label: "Text" },
-              { token: "--color-muted",      hex: "#555555", label: "Muted" },
-              { token: "--color-subtle",     hex: "#888888", label: "Subtle" },
-              { token: "--color-bg",         hex: "#f6f6f6", label: "Background" },
-              { token: "--color-bg-code",    hex: "#f4f5f6", label: "Code BG" },
-              { token: "--color-badge",      hex: "#5e5e5e", label: "Badge" },
-              { token: "--color-border",     hex: "#cccccc", label: "Border" },
-              { token: "--color-divider",    hex: "#e0e0e0", label: "Divider" },
-              { token: "--color-white",      hex: "#ffffff", label: "White" },
-              { token: "--color-success",    hex: "#30b582", label: "Success" },
-              { token: "--color-warning",    hex: "#ef9243", label: "Warning" },
-              { token: "--color-info",       hex: "#3063b5", label: "Info" },
-              { token: "--color-danger",     hex: "#e03c3c", label: "Danger" },
-            ].map(({ token, hex, label }) => {
-              const dark = ["#2f2f2f", "#555555", "#9b4dca", "#5e5e5e", "#606c76", "#30a3b3", "#30b582", "#3063b5", "#e03c3c"].includes(hex);
-              return (
-                <div key={token} className="token-swatch">
-                  <div
-                    className="token-swatch-color"
-                    style={{ background: `var(${token})`, color: dark ? "#f6f6f6" : "#2f2f2f" }}
-                  >
-                    {hex}
-                  </div>
-                  <div className="token-swatch-info">
-                    <div className="token-swatch-name">{label}</div>
-                    <div className="token-swatch-token">{token}</div>
-                  </div>
+        <Section title="Color Palette" id="color-palette" level={1}>
+          {(() => {
+            const brand = [
+              { token: "--color-brand",  hex: "#30a3b3", label: "Brand",  light: false },
+              { token: "--color-accent", hex: "#EA9B56", label: "Accent", light: false },
+            ];
+            const semantic = [
+              { token: "--color-success", hex: "#34c98f", label: "Success", light: false },
+              { token: "--color-warning", hex: "#f4a44d", label: "Warning", light: false },
+              { token: "--color-info",    hex: "#4a7fd4", label: "Info",    light: false },
+              { token: "--color-danger",  hex: "#f05555", label: "Danger",  light: false },
+            ];
+            const base = isDark ? [
+              { token: "--color-text",     hex: "#e8e8e8", label: "Text",       light: true  },
+              { token: "--color-muted",    hex: "#aaaaaa", label: "Muted",      light: true  },
+              { token: "--color-subtle",   hex: "#777777", label: "Subtle",     light: false },
+              { token: "--color-bg",       hex: "#222222", label: "Background", light: false },
+              { token: "--color-bg-code",  hex: "#333333", label: "Code BG",    light: false },
+              { token: "--color-surface",  hex: "#2d2d2d", label: "Surface",    light: false },
+              { token: "--color-border",   hex: "#484848", label: "Border",     light: false },
+              { token: "--color-divider",  hex: "#3a3a3a", label: "Divider",    light: false },
+              { token: "--color-badge",    hex: "#5e5e5e", label: "Badge",      light: false },
+              { token: "--color-white",    hex: "#ffffff", label: "White",      light: true  },
+            ] : [
+              { token: "--color-text",     hex: "#2f2f2f", label: "Text",       light: false },
+              { token: "--color-muted",    hex: "#555555", label: "Muted",      light: false },
+              { token: "--color-subtle",   hex: "#888888", label: "Subtle",     light: false },
+              { token: "--color-bg",       hex: "#f6f6f6", label: "Background", light: true  },
+              { token: "--color-bg-code",  hex: "#e8eaec", label: "Code BG",    light: true  },
+              { token: "--color-surface",  hex: "#ffffff", label: "Surface",    light: true  },
+              { token: "--color-border",   hex: "#cccccc", label: "Border",     light: true  },
+              { token: "--color-divider",  hex: "#e0e0e0", label: "Divider",    light: true  },
+              { token: "--color-badge",    hex: "#5e5e5e", label: "Badge",      light: false },
+              { token: "--color-white",    hex: "#ffffff", label: "White",      light: true  },
+            ];
+            const renderSwatch = ({ token, hex, label, light }: { token: string; hex: string; label: string; light: boolean }) => (
+              <div key={token} className="token-swatch">
+                <div
+                  className="token-swatch-color"
+                  style={{ background: `var(${token})`, color: light ? "#2f2f2f" : "#f6f6f6" }}
+                >
+                  {hex}
                 </div>
-              );
-            })}
-          </div>
+                <div className="token-swatch-info">
+                  <div className="token-swatch-name">{label}</div>
+                  <div className="token-swatch-token">{token}</div>
+                </div>
+              </div>
+            );
+            return (
+              <>
+                <div className="section-label">Brand</div>
+                <div className="token-grid" style={{ marginBottom: "var(--space-3)" }}>
+                  {brand.map(renderSwatch)}
+                </div>
+                <div className="section-label">Semantic</div>
+                <div className="token-grid" style={{ marginBottom: "var(--space-3)" }}>
+                  {semantic.map(renderSwatch)}
+                </div>
+                <div className="section-label">Base</div>
+                <div className="token-grid">
+                  {base.map(renderSwatch)}
+                </div>
+              </>
+            );
+          })()}
         </Section>
 
         <Separator />
 
         {/* Typography */}
-        <Section title="Typography">
+        <Section title="Typography" id="typography" level={1}>
           <h1>Heading 1 — The quick brown fox</h1>
           <h2>Heading 2 — The quick brown fox</h2>
           <h3>Heading 3 — The quick brown fox</h3>
@@ -134,44 +365,65 @@ export default function App() {
 
         <Separator />
 
+        <div className="section" id="components">
+          <h1>Components</h1>
+        </div>
+
         {/* Button */}
-        <Section title="Button">
+        <Section title="Button" id="button">
           <div className="row">
             <Button variant="primary">Primary</Button>
             <Button variant="ghost">Ghost</Button>
-            <Button variant="nav">Nav</Button>
+            <Button variant="danger">Danger</Button>
             <Button variant="primary" disabled>Disabled</Button>
             <Button variant="primary" asChild><a href="#top">Link</a></Button>
           </div>
+          <CodeBlock isDark={isDark} code={`
+<Button variant="primary">Primary</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="danger">Danger</Button>
+<Button variant="primary" disabled>Disabled</Button>
+<Button variant="primary" asChild><a href="/page">Link</a></Button>
+          `} />
         </Section>
 
         <Separator />
 
         {/* Badge */}
-        <Section title="Badge">
+        <Section title="Badge" id="badge">
           <div className="row">
             <Badge>Default</Badge>
             <Badge asChild><a href="https://github.com" target="_blank" rel="noreferrer">GitHub</a></Badge>
             <Badge asChild><a href="https://orcid.org" target="_blank" rel="noreferrer">ORCID</a></Badge>
           </div>
+          <CodeBlock isDark={isDark} code={`
+<Badge>Default</Badge>
+<Badge asChild><a href="https://github.com">GitHub</a></Badge>
+          `} />
         </Section>
 
         <Separator />
 
         {/* Avatar */}
-        <Section title="Avatar">
+        <Section title="Avatar" id="avatar">
           <div className="row">
             <Tooltip content="sm"><Avatar fallback="SM" size="sm" /></Tooltip>
             <Tooltip content="md"><Avatar fallback="SM" size="md" /></Tooltip>
             <Tooltip content="lg"><Avatar fallback="SM" size="lg" /></Tooltip>
             <Avatar src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=identicon&f=y" alt="Gravatar" size="lg" fallback="SM" />
           </div>
+          <CodeBlock isDark={isDark} code={`
+<Avatar fallback="SM" size="sm" />
+<Avatar fallback="SM" size="md" />
+<Avatar fallback="SM" size="lg" />
+<Avatar src="https://example.com/photo.jpg" alt="User" size="lg" fallback="SM" />
+          `} />
         </Section>
 
         <Separator />
 
         {/* Card */}
-        <Section title="Card">
+        <Section title="Card" id="card">
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(24rem, 1fr))", gap: "var(--space-2)" }}>
             <Card>
               <CardHeader>User Profile</CardHeader>
@@ -201,7 +453,7 @@ export default function App() {
         <Separator />
 
         {/* Tabs */}
-        <Section title="Tabs">
+        <Section title="Tabs" id="tabs">
           <Tabs defaultValue="all">
             <TabsList>
               <TabsTrigger value="all">All</TabsTrigger>
@@ -218,12 +470,22 @@ export default function App() {
               <p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Items you have recently viewed appear here.</p>
             </TabsContent>
           </Tabs>
+          <CodeBlock isDark={isDark} code={`
+<Tabs defaultValue="tab1">
+  <TabsList>
+    <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+  </TabsList>
+  <TabsContent value="tab1">Content for Tab 1</TabsContent>
+  <TabsContent value="tab2">Content for Tab 2</TabsContent>
+</Tabs>
+          `} />
         </Section>
 
         <Separator />
 
         {/* Accordion */}
-        <Section title="Accordion">
+        <Section title="Accordion" id="accordion">
           <Accordion type="single" defaultValue="q1" collapsible>
             <AccordionItem value="q1">
               <AccordionTrigger>How long does shipping take?</AccordionTrigger>
@@ -238,12 +500,20 @@ export default function App() {
               <AccordionContent>Go to Settings → Account and follow the deletion steps. This action cannot be undone.</AccordionContent>
             </AccordionItem>
           </Accordion>
+          <CodeBlock isDark={isDark} code={`
+<Accordion type="single" collapsible>
+  <AccordionItem value="q1">
+    <AccordionTrigger>Question?</AccordionTrigger>
+    <AccordionContent>Answer.</AccordionContent>
+  </AccordionItem>
+</Accordion>
+          `} />
         </Section>
 
         <Separator />
 
         {/* Collapsible */}
-        <Section title="Collapsible">
+        <Section title="Collapsible" id="collapsible">
           <Collapsible open={collOpen} onOpenChange={setCollOpen}>
             <div style={{ border: "1px solid var(--color-divider)", borderRadius: "var(--radius-md)", overflow: "hidden" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "var(--space-2) var(--space-3)" }}>
@@ -263,12 +533,20 @@ export default function App() {
               </CollapsibleContent>
             </div>
           </Collapsible>
+          <CodeBlock isDark={isDark} code={`
+<Collapsible open={open} onOpenChange={setOpen}>
+  <CollapsibleTrigger asChild>
+    <Button variant="ghost">Toggle</Button>
+  </CollapsibleTrigger>
+  <CollapsibleContent>Hidden content here.</CollapsibleContent>
+</Collapsible>
+          `} />
         </Section>
 
         <Separator />
 
         {/* Dialog */}
-        <Section title="Dialog / AlertDialog">
+        <Section title="Dialog / AlertDialog" id="dialog">
           <div className="row">
             <Dialog>
               <DialogTrigger asChild>
@@ -298,12 +576,31 @@ export default function App() {
               />
             </AlertDialog>
           </div>
+          <CodeBlock isDark={isDark} code={`
+<Dialog>
+  <DialogTrigger asChild><Button>Open</Button></DialogTrigger>
+  <DialogContent title="Title" description="Description">
+    <p>Dialog body content.</p>
+    <DialogClose asChild><Button variant="ghost">Close</Button></DialogClose>
+  </DialogContent>
+</Dialog>
+
+<AlertDialog>
+  <AlertDialogTrigger asChild><Button variant="ghost">Delete</Button></AlertDialogTrigger>
+  <AlertDialogContent
+    title="Are you sure?"
+    description="This action cannot be undone."
+    actionLabel="Delete"
+    cancelLabel="Cancel"
+  />
+</AlertDialog>
+          `} />
         </Section>
 
         <Separator />
 
         {/* Popover / HoverCard */}
-        <Section title="Popover / HoverCard">
+        <Section title="Popover / HoverCard" id="popover">
           <div className="row">
             <Popover>
               <PopoverTrigger asChild>
@@ -332,12 +629,23 @@ export default function App() {
               </HoverCardContent>
             </HoverCard>
           </div>
+          <CodeBlock isDark={isDark} code={`
+<Popover>
+  <PopoverTrigger asChild><Button variant="ghost">Open</Button></PopoverTrigger>
+  <PopoverContent>Popover content.</PopoverContent>
+</Popover>
+
+<HoverCard>
+  <HoverCardTrigger asChild><Button variant="ghost">Hover me</Button></HoverCardTrigger>
+  <HoverCardContent>Card shown on hover.</HoverCardContent>
+</HoverCard>
+          `} />
         </Section>
 
         <Separator />
 
         {/* DropdownMenu */}
-        <Section title="DropdownMenu">
+        <Section title="DropdownMenu" id="dropdown-menu">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost">Menu ▾</Button>
@@ -350,12 +658,23 @@ export default function App() {
               <DropdownMenuItem disabled>Delete (disabled)</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          <CodeBlock isDark={isDark} code={`
+<DropdownMenu>
+  <DropdownMenuTrigger asChild><Button variant="ghost">Menu ▾</Button></DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuLabel>Actions</DropdownMenuLabel>
+    <DropdownMenuItem onSelect={() => {}}>Copy Link</DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem disabled>Delete (disabled)</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+          `} />
         </Section>
 
         <Separator />
 
         {/* NavigationMenu */}
-        <Section title="NavigationMenu">
+        <Section title="NavigationMenu" id="navigation-menu">
           <NavigationMenu>
             <NavigationMenuItem>
               <NavigationMenuLink href="#" className="">About</NavigationMenuLink>
@@ -374,12 +693,25 @@ export default function App() {
               <NavigationMenuLink href="#">Blog</NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenu>
+          <CodeBlock isDark={isDark} code={`
+<NavigationMenu>
+  <NavigationMenuItem>
+    <NavigationMenuLink href="#">About</NavigationMenuLink>
+  </NavigationMenuItem>
+  <NavigationMenuItem>
+    <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
+    <NavigationMenuContent>
+      <NavigationMenuLink href="#">New Arrivals</NavigationMenuLink>
+    </NavigationMenuContent>
+  </NavigationMenuItem>
+</NavigationMenu>
+          `} />
         </Section>
 
         <Separator />
 
         {/* Form components */}
-        <Section title="Form — Checkbox / RadioGroup / Switch / Select / Slider / Label">
+        <Section title="Form — Checkbox / RadioGroup / Switch / Select / Slider / Label" id="form">
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(28rem, 1fr))", gap: "var(--space-4)" }}>
 
             {/* Checkbox */}
@@ -450,12 +782,31 @@ export default function App() {
             </div>
 
           </div>
+          <CodeBlock isDark={isDark} code={`
+<Checkbox id="chk" checked={checked} onCheckedChange={setChecked} />
+<Label htmlFor="chk">Accept terms</Label>
+
+<RadioGroup value={val} onValueChange={setVal}>
+  <RadioGroupItem value="a" id="r-a" /><Label htmlFor="r-a">Option A</Label>
+  <RadioGroupItem value="b" id="r-b" /><Label htmlFor="r-b">Option B</Label>
+</RadioGroup>
+
+<Switch id="sw" checked={on} onCheckedChange={setOn} />
+<Label htmlFor="sw">Enable</Label>
+
+<Select
+  placeholder="Select..."
+  groups={[{ label: "Group", options: [{ value: "a", label: "Option A" }] }]}
+/>
+
+<Slider value={[40]} onValueChange={setVal} />
+          `} />
         </Section>
 
         <Separator />
 
         {/* Toast */}
-        <Section title="Toast">
+        <Section title="Toast" id="toast">
           <div className="row">
             <Button variant="primary" onClick={() => setToastOpen(true)}>
               Show Toast
@@ -468,24 +819,90 @@ export default function App() {
             description="Your changes have been saved successfully."
             variant="success"
           />
+          <CodeBlock isDark={isDark} code={`
+<ToastProvider>
+  <Button onClick={() => setOpen(true)}>Show Toast</Button>
+  <Toast
+    open={open}
+    onOpenChange={setOpen}
+    title="Saved"
+    description="Your changes have been saved."
+    variant="success"
+  />
+  <ToastViewport />
+</ToastProvider>
+          `} />
+        </Section>
+
+        <Separator />
+
+        {/* Grid */}
+        <Section title="Grid" id="grid">
+          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+            <div>
+              <div className="section-label" style={{ marginBottom: "var(--space-2)" }}>columns=3 / gap="md"</div>
+              <Grid columns={3} gap="md">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <Card key={i}><CardBody style={{ textAlign: "center", color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Item {i + 1}</CardBody></Card>
+                ))}
+              </Grid>
+            </div>
+            <div>
+              <div className="section-label" style={{ marginBottom: "var(--space-2)" }}>columns="auto" (responsive)</div>
+              <Grid columns="auto" gap="md">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Card key={i}><CardBody style={{ textAlign: "center", color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Item {i + 1}</CardBody></Card>
+                ))}
+              </Grid>
+            </div>
+            <div>
+              <div className="section-label" style={{ marginBottom: "var(--space-2)" }}>colSpan / full width</div>
+              <Grid columns={3} gap="md">
+                <GridItem colSpan={2}><Card><CardBody style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>colSpan=2</CardBody></Card></GridItem>
+                <Card><CardBody style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>colSpan=1</CardBody></Card>
+                <GridItem colSpan="full"><Card><CardBody style={{ textAlign: "center", color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>colSpan="full"</CardBody></Card></GridItem>
+              </Grid>
+            </div>
+          </div>
+          <CodeBlock isDark={isDark} code={`
+// Fixed columns
+<Grid columns={3} gap="md">
+  <Card>...</Card>
+  <Card>...</Card>
+  <Card>...</Card>
+</Grid>
+
+// Responsive auto-fill
+<Grid columns="auto" gap="md">
+  <Card>...</Card>
+</Grid>
+
+// Spanning columns
+<Grid columns={3} gap="md">
+  <GridItem colSpan={2}>Wide item</GridItem>
+  <div>Normal item</div>
+  <GridItem colSpan="full">Full width</GridItem>
+</Grid>
+          `} />
         </Section>
 
         <Separator />
 
         {/* Progress */}
-        <Section title="Progress">
+        <Section title="Progress" id="progress">
           <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", maxWidth: "48rem" }}>
             <Progress value={progress} />
             <div style={{ fontSize: "var(--text-xs)", color: "var(--color-subtle)" }}>{progress}% complete</div>
             <Progress value={30} />
             <Progress value={90} />
           </div>
+          <CodeBlock isDark={isDark} code={`<Progress value={65} />`} />
         </Section>
 
         <Separator />
 
         {/* ScrollArea */}
-        <Section title="ScrollArea">
+        <Section title="ScrollArea" id="scroll-area">
           <ScrollArea height="16rem" style={{ border: "1px solid var(--color-divider)", borderRadius: "var(--radius-md)" }}>
             <div style={{ padding: "var(--space-3)" }}>
               {Array.from({ length: 20 }).map((_, i) => (
@@ -495,12 +912,17 @@ export default function App() {
               ))}
             </div>
           </ScrollArea>
+          <CodeBlock isDark={isDark} code={`
+<ScrollArea height="16rem">
+  <div>Long content here...</div>
+</ScrollArea>
+          `} />
         </Section>
 
         <Separator />
 
         {/* Tooltip */}
-        <Section title="Tooltip">
+        <Section title="Tooltip" id="tooltip">
           <div className="row">
             {(["top", "right", "bottom", "left"] as const).map((side) => (
               <Tooltip key={side} content={`Shows on ${side}`} side={side}>
@@ -508,8 +930,14 @@ export default function App() {
               </Tooltip>
             ))}
           </div>
+          <CodeBlock isDark={isDark} code={`
+<Tooltip content="Helpful hint" side="top">
+  <Button variant="ghost">Hover me</Button>
+</Tooltip>
+          `} />
         </Section>
 
+      </div>
       </div>
       <ToastViewport />
     </ToastProvider>
