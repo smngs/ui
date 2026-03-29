@@ -817,10 +817,10 @@ export default function App() {
                   <Button variant="nav">Components ▾</Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem asChild><a href="#button">Button</a></DropdownMenuItem>
-                  <DropdownMenuItem asChild><a href="#badge">Badge</a></DropdownMenuItem>
-                  <DropdownMenuItem asChild><a href="#card">Card</a></DropdownMenuItem>
-                  <DropdownMenuItem asChild><a href="#tabs">Tabs</a></DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => location.hash = "#button"}>Button</DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => location.hash = "#badge"}>Badge</DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => location.hash = "#card"}>Card</DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => location.hash = "#tabs"}>Tabs</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
               <Button variant="nav" asChild><a href="#navbar">Blog</a></Button>
@@ -840,8 +840,8 @@ export default function App() {
         <Button variant="nav">Components ▾</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem asChild><a href="/button">Button</a></DropdownMenuItem>
-        <DropdownMenuItem asChild><a href="/badge">Badge</a></DropdownMenuItem>
+        <DropdownMenuItem onSelect={() => router.push("/button")}>Button</DropdownMenuItem>
+        <DropdownMenuItem onSelect={() => router.push("/badge")}>Badge</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
     <Button variant="nav" asChild><a href="/blog">Blog</a></Button>
