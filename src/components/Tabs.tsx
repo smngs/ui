@@ -1,25 +1,30 @@
 import React from "react";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 
+type TabsSize = "sm" | "md" | "lg";
+
 export function Tabs({
   defaultValue,
   value,
   onValueChange,
+  size = "md",
   children,
   className = "",
 }: {
   defaultValue?: string;
   value?: string;
   onValueChange?: (value: string) => void;
+  size?: TabsSize;
   children: React.ReactNode;
   className?: string;
 }) {
+  const sizeClass = size !== "md" ? ` smngs-tabs-${size}` : "";
   return (
     <TabsPrimitive.Root
       defaultValue={defaultValue}
       value={value}
       onValueChange={onValueChange}
-      className={`smngs-tabs ${className}`.trim()}
+      className={`smngs-tabs${sizeClass} ${className}`.trim()}
     >
       {children}
     </TabsPrimitive.Root>
