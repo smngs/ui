@@ -471,6 +471,56 @@ li:last-child { margin-bottom: 0; }
   letter-spacing: 0.06em;
 }
 
+/* ===== Navbar ===== */
+.smngs-navbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--color-brand);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-lg);
+}
+.smngs-navbar-title {
+  color: var(--color-white);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  padding: 0.3em 0.7em;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--ease-fast);
+}
+.smngs-navbar-title:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: var(--color-white);
+}
+.smngs-navbar-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.smngs-navbar-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.smngs-btn-nav {
+  background: transparent;
+  color: var(--color-white);
+}
+.smngs-btn-nav:hover {
+  background: rgba(255, 255, 255, 0.2);
+  filter: none;
+}
+.smngs-btn-nav-active {
+  background: rgba(255, 255, 255, 0.25);
+  color: var(--color-white);
+}
+.smngs-btn-nav-active:hover {
+  background: rgba(255, 255, 255, 0.35);
+  filter: none;
+}
+
 /* ===== NavigationMenu ===== */
 .smngs-nav-menu {
   position: relative;
