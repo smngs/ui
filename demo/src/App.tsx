@@ -138,7 +138,6 @@ export default function App() {
   );
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState("");
-  const [activeSwatchToken, setActiveSwatchToken] = useState<string | null>(null);
   const suppressObserver = React.useRef(false);
   const suppressTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -301,30 +300,36 @@ export default function App() {
               { token: "--color-badge",    hex: "#5e5e5e", label: "Badge",      light: false, usages: ["Badge (default) background"] },
               { token: "--color-white",    hex: "#ffffff", label: "White",      light: true,  usages: ["Text on brand backgrounds", "Button (primary) text", "Navbar links"] },
             ];
-            const renderSwatch = ({ token, hex, label, light, usages }: SwatchDef) => {
-              const isActive = activeSwatchToken === token;
-              return (
-                <div
-                  key={token}
-                  className={`token-swatch${isActive ? " token-swatch-active" : ""}`}
-                  onClick={() => setActiveSwatchToken(isActive ? null : token)}
-                >
-                  <div
-                    className="token-swatch-color"
-                    style={{ background: `var(${token})`, color: light ? "#2f2f2f" : "#f6f6f6" }}
-                  >
-                    {hex}
-                  </div>
-                  <div className="token-swatch-info">
-                    <div className="token-swatch-name">{label}</div>
-                    <div className="token-swatch-token">{token}</div>
-                    <div className="token-swatch-usage">
-                      {usages.map((u) => <div key={u} className="token-swatch-usage-item">{u}</div>)}
+            const renderSwatch = ({ token, hex, label, light, usages }: SwatchDef) => (
+              <Popover key={token}>
+                <PopoverTrigger asChild>
+                  <div className="token-swatch token-swatch-clickable">
+                    <div
+                      className="token-swatch-color"
+                      style={{ background: `var(${token})`, color: light ? "#2f2f2f" : "#f6f6f6" }}
+                    >
+                      {hex}
+                    </div>
+                    <div className="token-swatch-info">
+                      <div className="token-swatch-name">{label}</div>
+                      <div className="token-swatch-token">{token}</div>
                     </div>
                   </div>
-                </div>
-              );
-            };
+                </PopoverTrigger>
+                <PopoverContent className="token-swatch-popup">
+                  <div className="token-swatch-popup-header">
+                    <span className="token-swatch-popup-dot" style={{ background: `var(${token})` }} />
+                    <strong>{label}</strong>
+                    <code className="token-swatch-popup-code">{token}</code>
+                  </div>
+                  <div className="token-swatch-popup-usages">
+                    {usages.map((u) => (
+                      <div key={u} className="token-swatch-popup-item">{u}</div>
+                    ))}
+                  </div>
+                </PopoverContent>
+              </Popover>
+            );
             return (
               <>
                 <div className="section-label">Brand</div>

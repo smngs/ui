@@ -41,6 +41,8 @@ pre code {
 }
 blockquote {
   border-left: 3px solid var(--color-brand);
+  background-color: var(--color-bg-code);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   margin: 0 0 var(--space-2);
   padding: var(--space-1) var(--space-3);
   color: var(--color-muted);
