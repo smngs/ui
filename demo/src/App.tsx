@@ -301,8 +301,8 @@ export default function App() {
               { token: "--color-white",    hex: "#ffffff", label: "White",      light: true,  usages: ["Text on brand backgrounds", "Button (primary) text", "Navbar links"] },
             ];
             const renderSwatch = ({ token, hex, label, light, usages }: SwatchDef) => (
-              <Popover key={token}>
-                <PopoverTrigger asChild>
+              <HoverCard key={token} openDelay={100} closeDelay={50}>
+                <HoverCardTrigger asChild>
                   <div className="token-swatch token-swatch-clickable">
                     <div
                       className="token-swatch-color"
@@ -315,8 +315,8 @@ export default function App() {
                       <div className="token-swatch-token">{token}</div>
                     </div>
                   </div>
-                </PopoverTrigger>
-                <PopoverContent className="token-swatch-popup">
+                </HoverCardTrigger>
+                <HoverCardContent className="token-swatch-popup">
                   <div className="token-swatch-popup-header">
                     <span className="token-swatch-popup-dot" style={{ background: `var(${token})` }} />
                     <strong>{label}</strong>
@@ -327,8 +327,8 @@ export default function App() {
                       <div key={u} className="token-swatch-popup-item">{u}</div>
                     ))}
                   </div>
-                </PopoverContent>
-              </Popover>
+                </HoverCardContent>
+              </HoverCard>
             );
             return (
               <>
