@@ -33,7 +33,7 @@ import {
   Grid, GridItem,
   Blockquote,
   LinkCard,
-  Navbar, NavbarTitle, NavbarLinks, NavbarRight, NavbarDropdownContent,
+  Navbar, NavbarTitle, NavbarLinks, NavbarRight, NavbarHamburger, NavbarMobileMenu, NavbarDropdownContent,
 } from "@smngs/ui";
 
 type TocItem = { id: string; label: string; level: 1 | 2 };
@@ -527,7 +527,7 @@ export default function App() {
 
         {/* Card */}
         <Section title="Card" id="card">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(24rem, 1fr))", gap: "var(--space-2)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(24rem, 100%), 1fr))", gap: "var(--space-2)" }}>
             <Card>
               <CardHeader>User Profile</CardHeader>
               <CardBody>
@@ -828,7 +828,13 @@ export default function App() {
             </NavbarLinks>
             <NavbarRight>
               <Button variant="nav"><FontAwesomeIcon icon={faMoon} /></Button>
+              <NavbarHamburger />
             </NavbarRight>
+            <NavbarMobileMenu>
+              <a href="#navbar">Home</a>
+              <a href="#button">Components</a>
+              <a href="#navbar">Blog</a>
+            </NavbarMobileMenu>
           </Navbar>
           <CodeBlock isDark={isDark} code={`
 <Navbar>
@@ -849,7 +855,12 @@ export default function App() {
   </NavbarLinks>
   <NavbarRight>
     {/* icon buttons, theme toggle, etc. */}
+    <NavbarHamburger />
   </NavbarRight>
+  <NavbarMobileMenu>
+    <a href="/">Home</a>
+    <a href="/blog">Blog</a>
+  </NavbarMobileMenu>
 </Navbar>
           `} />
         </Section>
