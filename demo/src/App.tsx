@@ -487,9 +487,19 @@ export default function App() {
             <Badge asChild><a href="https://github.com" target="_blank" rel="noreferrer">GitHub</a></Badge>
             <Badge asChild><a href="https://orcid.org" target="_blank" rel="noreferrer">ORCID</a></Badge>
           </div>
+          <div className="row" style={{ alignItems: "center" }}>
+            <Badge size="sm">Small</Badge>
+            <Badge size="md">Medium</Badge>
+            <Badge size="lg">Large</Badge>
+          </div>
           <CodeBlock isDark={isDark} code={`
 <Badge>Default</Badge>
 <Badge asChild><a href="https://github.com">GitHub</a></Badge>
+
+{/* size: "sm" | "md" (default) | "lg" */}
+<Badge size="sm">Small</Badge>
+<Badge size="md">Medium</Badge>
+<Badge size="lg">Large</Badge>
           `} />
         </Section>
 
@@ -567,6 +577,26 @@ export default function App() {
               <p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Items you have recently viewed appear here.</p>
             </TabsContent>
           </Tabs>
+          <Tabs defaultValue="a" size="sm">
+            <TabsList>
+              <TabsTrigger value="a">Small</TabsTrigger>
+              <TabsTrigger value="b">Tabs</TabsTrigger>
+              <TabsTrigger value="c">Example</TabsTrigger>
+            </TabsList>
+            <TabsContent value="a"><p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Small size tab content.</p></TabsContent>
+            <TabsContent value="b"><p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Tab B.</p></TabsContent>
+            <TabsContent value="c"><p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Tab C.</p></TabsContent>
+          </Tabs>
+          <Tabs defaultValue="a" size="lg">
+            <TabsList>
+              <TabsTrigger value="a">Large</TabsTrigger>
+              <TabsTrigger value="b">Tabs</TabsTrigger>
+              <TabsTrigger value="c">Example</TabsTrigger>
+            </TabsList>
+            <TabsContent value="a"><p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Large size tab content.</p></TabsContent>
+            <TabsContent value="b"><p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Tab B.</p></TabsContent>
+            <TabsContent value="c"><p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Tab C.</p></TabsContent>
+          </Tabs>
           <CodeBlock isDark={isDark} code={`
 <Tabs defaultValue="tab1">
   <TabsList>
@@ -576,6 +606,10 @@ export default function App() {
   <TabsContent value="tab1">Content for Tab 1</TabsContent>
   <TabsContent value="tab2">Content for Tab 2</TabsContent>
 </Tabs>
+
+{/* size: "sm" | "md" (default) | "lg" */}
+<Tabs defaultValue="tab1" size="sm">...</Tabs>
+<Tabs defaultValue="tab1" size="lg">...</Tabs>
           `} />
         </Section>
 
