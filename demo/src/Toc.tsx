@@ -13,10 +13,13 @@ export const TOC_ITEMS: TocItem[] = [
   { id: "avatar",       label: "Avatar",               level: 3 },
   { id: "card",         label: "Card",                 level: 3 },
   { id: "tooltip",      label: "Tooltip",              level: 3 },
+  { id: "toggle",       label: "Toggle",               level: 3 },
+  { id: "toggle-group", label: "ToggleGroup",          level: 3 },
   // Overlay
   { id: "overlay",      label: "Overlay",              level: 2 },
   { id: "dialog",       label: "Dialog / AlertDialog", level: 3 },
   { id: "popover",      label: "Popover / HoverCard",  level: 3 },
+  { id: "context-menu", label: "ContextMenu",          level: 3 },
   // Navigation
   { id: "navigation",   label: "Navigation",           level: 2 },
   { id: "tabs",         label: "Tabs",                 level: 3 },
@@ -25,8 +28,10 @@ export const TOC_ITEMS: TocItem[] = [
   { id: "dropdown-menu",   label: "DropdownMenu",      level: 3 },
   { id: "navbar",          label: "Navbar",            level: 3 },
   { id: "navigation-menu", label: "NavigationMenu",    level: 3 },
+  { id: "menubar",         label: "Menubar",           level: 3 },
   // Form
   { id: "form",         label: "Form",                 level: 2 },
+  { id: "form-field",   label: "Form (validation)",    level: 3 },
   { id: "checkbox",     label: "Checkbox",             level: 3 },
   { id: "radio-group",  label: "RadioGroup",           level: 3 },
   { id: "switch",       label: "Switch",               level: 3 },
@@ -39,6 +44,7 @@ export const TOC_ITEMS: TocItem[] = [
   { id: "progress",     label: "Progress",             level: 3 },
   // Layout
   { id: "layout",       label: "Layout",               level: 2 },
+  { id: "toolbar",      label: "Toolbar",              level: 3 },
   { id: "grid",         label: "Grid",                 level: 3 },
   { id: "scroll-area",  label: "ScrollArea",           level: 3 },
   { id: "aspect-ratio", label: "AspectRatio",          level: 3 },

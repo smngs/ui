@@ -2,6 +2,7 @@ import {
   AlertDialog, AlertDialogContent, AlertDialogTrigger,
   Avatar,
   Button,
+  ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger,
   Dialog, DialogClose, DialogContent, DialogTrigger,
   HoverCard, HoverCardContent, HoverCardTrigger,
   Popover, PopoverContent, PopoverTrigger,
@@ -111,6 +112,62 @@ export function OverlaySection({ isDark }: { isDark: boolean }) {
   <HoverCardTrigger asChild><Button variant="ghost">Hover me</Button></HoverCardTrigger>
   <HoverCardContent>Card shown on hover.</HoverCardContent>
 </HoverCard>
+        `} />
+      </Section>
+
+      <Separator />
+
+      {/* ContextMenu */}
+      <Section title="ContextMenu" id="context-menu" level={3}>
+        <ContextMenu>
+          <ContextMenuTrigger>
+            <div style={{
+              padding: "var(--space-4)",
+              border: "2px dashed var(--color-divider)",
+              borderRadius: "var(--radius-md)",
+              textAlign: "center",
+              color: "var(--color-subtle)",
+              fontSize: "var(--text-sm)",
+              userSelect: "none",
+              cursor: "context-menu",
+            }}>
+              Right-click (or long-press) this area
+            </div>
+          </ContextMenuTrigger>
+          <ContextMenuContent>
+            <ContextMenuLabel>Actions</ContextMenuLabel>
+            <ContextMenuItem>View</ContextMenuItem>
+            <ContextMenuItem>Duplicate</ContextMenuItem>
+            <ContextMenuSeparator />
+            <ContextMenuSub>
+              <ContextMenuSubTrigger>Share</ContextMenuSubTrigger>
+              <ContextMenuSubContent>
+                <ContextMenuItem>Copy Link</ContextMenuItem>
+                <ContextMenuItem>Email</ContextMenuItem>
+              </ContextMenuSubContent>
+            </ContextMenuSub>
+            <ContextMenuSeparator />
+            <ContextMenuItem>Move to Trash</ContextMenuItem>
+          </ContextMenuContent>
+        </ContextMenu>
+        <CodeBlock isDark={isDark} code={`
+<ContextMenu>
+  <ContextMenuTrigger>
+    <div>Right-click this area</div>
+  </ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuLabel>Actions</ContextMenuLabel>
+    <ContextMenuItem>View</ContextMenuItem>
+    <ContextMenuSeparator />
+    <ContextMenuSub>
+      <ContextMenuSubTrigger>Share</ContextMenuSubTrigger>
+      <ContextMenuSubContent>
+        <ContextMenuItem>Copy Link</ContextMenuItem>
+      </ContextMenuSubContent>
+    </ContextMenuSub>
+    <ContextMenuItem>Delete</ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>
         `} />
       </Section>
 
