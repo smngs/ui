@@ -33,6 +33,7 @@ import {
   Grid, GridItem,
   Blockquote,
   LinkCard,
+  Navbar, NavbarTitle, NavbarLinks, NavbarRight, NavbarDropdownContent,
 } from "@smngs/ui";
 
 type TocItem = { id: string; label: string; level: 1 | 2 };
@@ -807,49 +808,49 @@ export default function App() {
 
         {/* Navbar */}
         <Section title="Navbar" id="navbar">
-          <nav className="smngs-navbar">
+          <Navbar>
             <Avatar src="https://github.com/smngs.png" fallback="SM" size="sm" />
-            <a href="#navbar" className="smngs-navbar-title">@smngs/ui</a>
-            <div className="smngs-navbar-links">
+            <NavbarTitle href="#navbar">@smngs/ui</NavbarTitle>
+            <NavbarLinks>
               <Button variant="nav" asChild><a href="#navbar">Home</a></Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="nav">Components ▾</Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="smngs-navbar-dropdown">
+                <NavbarDropdownContent>
                   <DropdownMenuItem onSelect={() => location.hash = "#button"}>Button</DropdownMenuItem>
                   <DropdownMenuItem onSelect={() => location.hash = "#badge"}>Badge</DropdownMenuItem>
                   <DropdownMenuItem onSelect={() => location.hash = "#card"}>Card</DropdownMenuItem>
                   <DropdownMenuItem onSelect={() => location.hash = "#tabs"}>Tabs</DropdownMenuItem>
-                </DropdownMenuContent>
+                </NavbarDropdownContent>
               </DropdownMenu>
               <Button variant="nav" asChild><a href="#navbar">Blog</a></Button>
-            </div>
-            <div className="smngs-navbar-right">
+            </NavbarLinks>
+            <NavbarRight>
               <Button variant="nav"><FontAwesomeIcon icon={faMoon} /></Button>
-            </div>
-          </nav>
+            </NavbarRight>
+          </Navbar>
           <CodeBlock isDark={isDark} code={`
-<nav className="smngs-navbar">
+<Navbar>
   <Avatar src="/avatar.png" fallback="SM" size="sm" />
-  <a href="/" className="smngs-navbar-title">My App</a>
-  <div className="smngs-navbar-links">
+  <NavbarTitle href="/">My App</NavbarTitle>
+  <NavbarLinks>
     <Button variant="nav" asChild><a href="/">Home</a></Button>
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="nav">Components ▾</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <NavbarDropdownContent>
         <DropdownMenuItem onSelect={() => router.push("/button")}>Button</DropdownMenuItem>
         <DropdownMenuItem onSelect={() => router.push("/badge")}>Badge</DropdownMenuItem>
-      </DropdownMenuContent>
+      </NavbarDropdownContent>
     </DropdownMenu>
     <Button variant="nav" asChild><a href="/blog">Blog</a></Button>
-  </div>
-  <div className="smngs-navbar-right">
+  </NavbarLinks>
+  <NavbarRight>
     {/* icon buttons, theme toggle, etc. */}
-  </div>
-</nav>
+  </NavbarRight>
+</Navbar>
           `} />
         </Section>
 
