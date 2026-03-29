@@ -85,6 +85,46 @@ function Section({ title, id, level = 2, children }: { title: string; id?: strin
   );
 }
 
+type SwatchDef = { token: string; hex: string; label: string; light: boolean; usages: string[] };
+
+function ColorSwatch({ token, hex, label, light, usages }: SwatchDef) {
+  const [open, setOpen] = useState(false);
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <div
+          className="token-swatch token-swatch-clickable"
+          onPointerEnter={(e) => { if (e.pointerType === "mouse") setOpen(true); }}
+          onPointerLeave={(e) => { if (e.pointerType === "mouse") setOpen(false); }}
+        >
+          <div
+            className="token-swatch-color"
+            style={{ background: `var(${token})`, color: light ? "#2f2f2f" : "#f6f6f6" }}
+          >
+            {hex}
+          </div>
+          <div className="token-swatch-info">
+            <div className="token-swatch-name">{label}</div>
+            <div className="token-swatch-token">{token}</div>
+          </div>
+        </div>
+      </PopoverTrigger>
+      <PopoverContent className="token-swatch-popup">
+        <div className="token-swatch-popup-header">
+          <span className="token-swatch-popup-dot" style={{ background: `var(${token})` }} />
+          <strong>{label}</strong>
+          <code className="token-swatch-popup-code">{token}</code>
+        </div>
+        <div className="token-swatch-popup-usages">
+          {usages.map((u) => (
+            <div key={u} className="token-swatch-popup-item">{u}</div>
+          ))}
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 function CodeBlock({ code, isDark }: { code: string; isDark: boolean }) {
   const [open, setOpen] = React.useState(false);
   return (
@@ -266,7 +306,6 @@ export default function App() {
         {/* Color Palette */}
         <Section title="Color Palette" id="color-palette" level={1}>
           {(() => {
-            type SwatchDef = { token: string; hex: string; label: string; light: boolean; usages: string[] };
             const brand: SwatchDef[] = [
               { token: "--color-brand",  hex: "#30a3b3", label: "Brand",  light: false, usages: ["Button (primary)", "Badge (brand)", "Links", "Section accent bars", "TOC active item"] },
               { token: "--color-accent", hex: "#EA9B56", label: "Accent", light: false, usages: ["Badge (accent)", "Code syntax: strings / variables"] },
@@ -300,36 +339,7 @@ export default function App() {
               { token: "--color-badge",    hex: "#5e5e5e", label: "Badge",      light: false, usages: ["Badge (default) background"] },
               { token: "--color-white",    hex: "#ffffff", label: "White",      light: true,  usages: ["Text on brand backgrounds", "Button (primary) text", "Navbar links"] },
             ];
-            const renderSwatch = ({ token, hex, label, light, usages }: SwatchDef) => (
-              <HoverCard key={token} openDelay={100} closeDelay={50}>
-                <HoverCardTrigger asChild>
-                  <div className="token-swatch token-swatch-clickable">
-                    <div
-                      className="token-swatch-color"
-                      style={{ background: `var(${token})`, color: light ? "#2f2f2f" : "#f6f6f6" }}
-                    >
-                      {hex}
-                    </div>
-                    <div className="token-swatch-info">
-                      <div className="token-swatch-name">{label}</div>
-                      <div className="token-swatch-token">{token}</div>
-                    </div>
-                  </div>
-                </HoverCardTrigger>
-                <HoverCardContent className="token-swatch-popup">
-                  <div className="token-swatch-popup-header">
-                    <span className="token-swatch-popup-dot" style={{ background: `var(${token})` }} />
-                    <strong>{label}</strong>
-                    <code className="token-swatch-popup-code">{token}</code>
-                  </div>
-                  <div className="token-swatch-popup-usages">
-                    {usages.map((u) => (
-                      <div key={u} className="token-swatch-popup-item">{u}</div>
-                    ))}
-                  </div>
-                </HoverCardContent>
-              </HoverCard>
-            );
+            const renderSwatch = (s: SwatchDef) => <ColorSwatch key={s.token} {...s} />;
             return (
               <>
                 <div className="section-label">Brand</div>
