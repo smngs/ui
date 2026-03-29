@@ -512,6 +512,9 @@ li:last-child { margin-bottom: 0; }
   background: rgba(255, 255, 255, 0.2);
   filter: none;
 }
+.smngs-btn-nav:focus-visible {
+  outline-color: rgba(255, 255, 255, 0.8);
+}
 .smngs-btn-nav-active {
   background: rgba(255, 255, 255, 0.25);
   color: var(--color-white);
@@ -519,6 +522,30 @@ li:last-child { margin-bottom: 0; }
 .smngs-btn-nav-active:hover {
   background: rgba(255, 255, 255, 0.35);
   filter: none;
+}
+.smngs-btn-nav-active:focus-visible {
+  outline-color: rgba(255, 255, 255, 0.8);
+}
+
+/* NavigationMenu inside .smngs-navbar */
+.smngs-navbar .smngs-nav-menu-list {
+  gap: 0;
+}
+.smngs-navbar .smngs-nav-menu-trigger,
+.smngs-navbar .smngs-nav-menu-link {
+  color: var(--color-white);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  padding: 0.3em 0.7em;
+}
+.smngs-navbar .smngs-nav-menu-trigger:hover,
+.smngs-navbar .smngs-nav-menu-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: var(--color-white);
+}
+.smngs-navbar .smngs-nav-menu-trigger:focus-visible,
+.smngs-navbar .smngs-nav-menu-link:focus-visible {
+  outline-color: rgba(255, 255, 255, 0.8);
 }
 
 /* ===== NavigationMenu ===== */
