@@ -41,3 +41,4 @@ export { ToastProvider, Toast, ToastViewport } from "./components/Toast";
 export { Progress } from "./components/Progress";
 export { ScrollArea } from "./components/ScrollArea";
 export { AspectRatio } from "./components/AspectRatio";
+export { Grid, GridItem } from "./components/Grid";
