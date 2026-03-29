@@ -1,5 +1,8 @@
 import { useState } from "react";
 import {
+  ArticleCard,
+  ArticleHero,
+  ArticleListCard,
   Avatar,
   Badge,
   Blockquote,
@@ -103,6 +106,167 @@ export function DisplaySection({ isDark }: { isDark: boolean }) {
   description="A brief description of the linked page."
   image="https://example.com/ogp.png"
   favicon="https://example.com/favicon.ico"
+/>
+        `} />
+      </Section>
+
+      <Separator />
+
+      {/* ArticleCard */}
+      <Section title="ArticleCard" id="article-card" level={3}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(22rem, 100%), 1fr))", gap: "var(--space-3)" }}>
+          <ArticleCard
+            href="#"
+            image="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80"
+            imageAlt="Code on a dark screen"
+            title="Getting Started with React Server Components"
+            category="Engineering"
+            tags={["React", "Next.js", "Performance"]}
+            date="2026-03-30"
+          />
+          <ArticleCard
+            href="#"
+            image="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800&q=80"
+            imageAlt="JavaScript code"
+            title="TypeScript Tips for Large Codebases"
+            category="Engineering"
+            tags={["TypeScript", "DX"]}
+            date="2026-02-28"
+          />
+          <ArticleCard
+            href="#"
+            title="Understanding CSS Grid Layout"
+            category="Design"
+            tags={["CSS", "Layout", "Web"]}
+            date="2026-03-15"
+          />
+          <ArticleCard
+            href="#"
+            compact
+            title="A Quick Note on Flexbox"
+            category="Design"
+            date="2026-03-10"
+          />
+          <ArticleCard
+            href="#"
+            compact
+            title="Naming Conventions in TypeScript Projects"
+            category="Engineering"
+            tags={["TypeScript"]}
+            date="2026-03-05"
+          />
+        </div>
+        <CodeBlock isDark={isDark} code={`
+{/* With image */}
+<ArticleCard
+  href="/blog/post-slug"
+  image="https://example.com/thumbnail.jpg"
+  imageAlt="Thumbnail"
+  title="Post Title"
+  category="Engineering"
+  tags={["React", "Next.js"]}
+  date="2026-03-30"
+/>
+
+{/* Compact (no image) */}
+<ArticleCard
+  href="/blog/post-slug"
+  compact
+  title="A Short Post Title"
+  category="Design"
+  date="2026-03-10"
+/>
+        `} />
+      </Section>
+
+      <Separator />
+
+      {/* ArticleListCard */}
+      <Section title="ArticleListCard" id="article-list-card" level={3}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+          <ArticleListCard
+            href="#"
+            image="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&q=80"
+            imageAlt="Code on a dark screen"
+            title="Getting Started with React Server Components"
+            description="A deep dive into React Server Components — what they are, how they work, and how to start using them in your Next.js app."
+            category="Engineering"
+            tags={["React", "Next.js", "Performance"]}
+            date="2026-03-30"
+          />
+          <ArticleListCard
+            href="#"
+            image="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=600&q=80"
+            imageAlt="JavaScript code"
+            title="TypeScript Tips for Large Codebases"
+            description="Practical patterns for keeping TypeScript maintainable as your project grows beyond the initial prototype phase."
+            category="Engineering"
+            tags={["TypeScript", "DX"]}
+            date="2026-02-28"
+          />
+          <ArticleListCard
+            href="#"
+            title="Understanding CSS Grid Layout"
+            description="Everything you need to know about CSS Grid — from basic rows and columns to complex responsive layouts."
+            category="Design"
+            tags={["CSS", "Layout"]}
+            date="2026-03-15"
+          />
+        </div>
+        <CodeBlock isDark={isDark} code={`
+<ArticleListCard
+  href="/blog/post-slug"
+  image="https://example.com/thumbnail.jpg"
+  imageAlt="Thumbnail"
+  title="Post Title"
+  description="A brief description of the article."
+  category="Engineering"
+  tags={["React", "Next.js"]}
+  date="2026-03-30"
+/>
+        `} />
+      </Section>
+
+      <Separator />
+
+      {/* ArticleHero */}
+      <Section title="ArticleHero" id="article-hero" level={3}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+        <ArticleHero
+          image="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80"
+          imageAlt="Code on a dark screen"
+          title="Getting Started with React Server Components"
+          description="A deep dive into React Server Components — what they are, how they work, and how to start using them in your Next.js application today."
+          category="Engineering"
+          tags={["React", "Next.js", "Performance"]}
+          date="2026-03-30"
+        />
+        <ArticleHero
+          title="Understanding CSS Grid Layout"
+          description="Everything you need to know about CSS Grid — from basic rows and columns to complex responsive layouts without a framework."
+          category="Design"
+          tags={["CSS", "Layout", "Web"]}
+          date="2026-03-15"
+        />
+        </div>
+        <CodeBlock isDark={isDark} code={`
+{/* With image */}
+<ArticleHero
+  image="https://example.com/thumbnail.jpg"
+  imageAlt="Thumbnail"
+  title="Post Title"
+  description="A brief description of the article."
+  category="Engineering"
+  tags={["React", "Next.js"]}
+  date="2026-03-30"
+/>
+
+{/* Without image */}
+<ArticleHero
+  title="Post Title"
+  description="A brief description of the article."
+  category="Design"
+  date="2026-03-15"
 />
         `} />
       </Section>
