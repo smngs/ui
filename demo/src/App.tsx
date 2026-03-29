@@ -32,6 +32,7 @@ import {
   Tooltip,
   Grid, GridItem,
   Blockquote,
+  LinkCard,
 } from "@smngs/ui";
 
 type TocItem = { id: string; label: string; level: 1 | 2 };
@@ -42,6 +43,7 @@ const TOC_ITEMS: TocItem[] = [
   { id: "components",   label: "Components",        level: 1 },
   { id: "blockquote",   label: "Blockquote",        level: 2 },
   { id: "button",       label: "Button",            level: 2 },
+  { id: "link-card",   label: "LinkCard",          level: 2 },
   { id: "badge",        label: "Badge",             level: 2 },
   { id: "avatar",       label: "Avatar",            level: 2 },
   { id: "card",         label: "Card",              level: 2 },
@@ -425,12 +427,54 @@ export default function App() {
             <Button variant="primary" disabled>Disabled</Button>
             <Button variant="primary" asChild><a href="#top">Link</a></Button>
           </div>
+          <div className="row" style={{ alignItems: "center" }}>
+            <Button variant="primary" size="sm">Small</Button>
+            <Button variant="primary" size="md">Medium</Button>
+            <Button variant="primary" size="lg">Large</Button>
+            <Button variant="ghost" size="sm">Ghost sm</Button>
+            <Button variant="ghost" size="lg">Ghost lg</Button>
+          </div>
           <CodeBlock isDark={isDark} code={`
 <Button variant="primary">Primary</Button>
 <Button variant="ghost">Ghost</Button>
 <Button variant="danger">Danger</Button>
 <Button variant="primary" disabled>Disabled</Button>
 <Button variant="primary" asChild><a href="/page">Link</a></Button>
+
+{/* size: "sm" | "md" (default) | "lg" */}
+<Button variant="primary" size="sm">Small</Button>
+<Button variant="primary" size="md">Medium</Button>
+<Button variant="primary" size="lg">Large</Button>
+          `} />
+        </Section>
+
+        <Separator />
+
+        {/* LinkCard */}
+        <Section title="LinkCard" id="link-card">
+          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+            <LinkCard
+              href="https://github.com/smngs/ui"
+              title="smngs/ui — Radix UI based design system"
+              description="A minimal component library built on Radix UI primitives with design tokens and dark mode support."
+              favicon="https://github.com/favicon.ico"
+            />
+            <LinkCard
+              href="https://www.radix-ui.com"
+              title="Radix UI — Unstyled, accessible components for React"
+              description="An open source component library optimized for fast development, easy maintenance, and accessibility."
+              image="https://www.radix-ui.com/social/default.png"
+              favicon="https://www.radix-ui.com/favicon.png"
+            />
+          </div>
+          <CodeBlock isDark={isDark} code={`
+<LinkCard
+  href="https://example.com"
+  title="Page Title"
+  description="A brief description of the linked page."
+  image="https://example.com/ogp.png"
+  favicon="https://example.com/favicon.ico"
+/>
           `} />
         </Section>
 
