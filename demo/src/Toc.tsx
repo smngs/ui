@@ -1,93 +1,124 @@
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
 export type TocItem = { id: string; label: string; level: 1 | 2 | 3 };
 
-export const TOC_ITEMS: TocItem[] = [
-  { id: "color-palette", label: "Color Palette",      level: 1 },
-  { id: "typography",    label: "Typography",          level: 1 },
-  { id: "components",   label: "Components",           level: 1 },
-  // Display
-  { id: "display",      label: "Display",              level: 2 },
-  { id: "blockquote",   label: "Blockquote",           level: 3 },
-  { id: "button",       label: "Button",               level: 3 },
-  { id: "link-card",    label: "LinkCard",             level: 3 },
-  { id: "badge",        label: "Badge",                level: 3 },
-  { id: "avatar",       label: "Avatar",               level: 3 },
-  { id: "card",         label: "Card",                 level: 3 },
-  { id: "tooltip",      label: "Tooltip",              level: 3 },
-  { id: "toggle",       label: "Toggle",               level: 3 },
-  { id: "toggle-group", label: "ToggleGroup",          level: 3 },
-  // Overlay
-  { id: "overlay",      label: "Overlay",              level: 2 },
-  { id: "dialog",       label: "Dialog / AlertDialog", level: 3 },
-  { id: "popover",      label: "Popover / HoverCard",  level: 3 },
-  { id: "context-menu", label: "ContextMenu",          level: 3 },
-  // Navigation
-  { id: "navigation",   label: "Navigation",           level: 2 },
-  { id: "tabs",         label: "Tabs",                 level: 3 },
-  { id: "accordion",    label: "Accordion",            level: 3 },
-  { id: "collapsible",  label: "Collapsible",          level: 3 },
-  { id: "dropdown-menu",   label: "DropdownMenu",      level: 3 },
-  { id: "navbar",          label: "Navbar",            level: 3 },
-  { id: "navigation-menu", label: "NavigationMenu",    level: 3 },
-  { id: "menubar",         label: "Menubar",           level: 3 },
-  // Form
-  { id: "form",         label: "Form",                 level: 2 },
-  { id: "form-field",   label: "Form (validation)",    level: 3 },
-  { id: "checkbox",     label: "Checkbox",             level: 3 },
-  { id: "radio-group",  label: "RadioGroup",           level: 3 },
-  { id: "switch",       label: "Switch",               level: 3 },
-  { id: "select",       label: "Select",               level: 3 },
-  { id: "slider",       label: "Slider",               level: 3 },
-  { id: "label",        label: "Label",                level: 3 },
-  // Feedback
-  { id: "feedback",     label: "Feedback",             level: 2 },
-  { id: "toast",        label: "Toast",                level: 3 },
-  { id: "progress",     label: "Progress",             level: 3 },
-  // Layout
-  { id: "layout",       label: "Layout",               level: 2 },
-  { id: "toolbar",      label: "Toolbar",              level: 3 },
-  { id: "grid",         label: "Grid",                 level: 3 },
-  { id: "scroll-area",  label: "ScrollArea",           level: 3 },
-  { id: "aspect-ratio", label: "AspectRatio",          level: 3 },
-];
+function collectItems(): TocItem[] {
+  return Array.from(document.querySelectorAll<HTMLElement>(".page .section[id]"))
+    .map((el) => {
+      const heading = el.querySelector<HTMLElement>("h1, h2, h3");
+      return {
+        id: el.id,
+        label: heading?.textContent?.trim() ?? el.id,
+        level: heading ? (parseInt(heading.tagName[1]) as 1 | 2 | 3) : 2,
+      };
+    })
+    .filter((item) => item.label);
+}
 
-function getActiveH2(activeId: string): string | null {
-  const idx = TOC_ITEMS.findIndex(item => item.id === activeId);
+function getActiveH2(items: TocItem[], activeId: string): string | null {
+  const idx = items.findIndex((item) => item.id === activeId);
   if (idx === -1) return null;
-  const level = TOC_ITEMS[idx].level;
-  if (level === 2) return activeId;
-  if (level === 3) {
+  if (items[idx].level === 2) return activeId;
+  if (items[idx].level === 3) {
     for (let i = idx - 1; i >= 0; i--) {
-      if (TOC_ITEMS[i].level === 2) return TOC_ITEMS[i].id;
+      if (items[i].level === 2) return items[i].id;
     }
   }
   return null;
 }
 
-export function Toc({ activeId, onSelect }: { activeId: string; onSelect: (id: string) => void }) {
-  const activeH2 = getActiveH2(activeId);
+export function Toc() {
+  const [items, setItems] = useState<TocItem[]>([]);
+  const [activeId, setActiveId] = useState("");
+  const suppressObserver = React.useRef(false);
+  const suppressTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const location = useLocation();
+
+  // Re-collect headings after route change (wait for DOM to render)
+  useEffect(() => {
+    const timer = setTimeout(() => setItems(collectItems()), 50);
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
+
+  // Scroll spy
+  useEffect(() => {
+    if (items.length === 0) return;
+    suppressObserver.current = false;
+
+    const checkActive = () => {
+      if (suppressObserver.current) return;
+      const elements = items
+        .map((item) => document.getElementById(item.id))
+        .filter(Boolean) as HTMLElement[];
+      const threshold = 80;
+      let current = "";
+      for (const el of elements) {
+        if (el.getBoundingClientRect().top <= threshold) current = el.id;
+      }
+      if (!current) {
+        const first = elements.find((el) => el.getBoundingClientRect().top < window.innerHeight);
+        if (first) current = first.id;
+      }
+      if (current) setActiveId(current);
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { ticking = false; checkActive(); });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    checkActive();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [items]);
+
+  if (items.length === 0) return null;
+
+  const activeH2 = getActiveH2(items, activeId);
+
+  const handleClick = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+    setActiveId(id);
+    suppressObserver.current = true;
+    if (suppressTimer.current) clearTimeout(suppressTimer.current);
+    const liftSuppress = () => { suppressObserver.current = false; };
+    window.addEventListener("scrollend", liftSuppress, { once: true });
+    suppressTimer.current = setTimeout(() => {
+      window.removeEventListener("scrollend", liftSuppress);
+      suppressObserver.current = false;
+    }, 700);
+  };
 
   return (
     <aside className="toc">
       <div className="toc-title">Contents</div>
       <nav>
         <ul className="toc-list">
-          {TOC_ITEMS.map((item, index) => {
+          {items.map((item, index) => {
             let hidden = false;
             if (item.level === 3) {
               let parentH2: string | null = null;
               for (let i = index - 1; i >= 0; i--) {
-                if (TOC_ITEMS[i].level === 2) { parentH2 = TOC_ITEMS[i].id; break; }
+                if (items[i].level === 2) { parentH2 = items[i].id; break; }
               }
               hidden = parentH2 !== activeH2;
             }
             return (
-              <li key={item.id} className={`toc-item toc-item-h${item.level}${activeId === item.id ? " toc-item-active" : ""}${hidden ? " toc-h3-hidden" : ""}`}>
+              <li
+                key={item.id}
+                className={`toc-item toc-item-h${item.level}${activeId === item.id ? " toc-item-active" : ""}${hidden ? " toc-h3-hidden" : ""}`}
+              >
                 {item.level === 3 ? (
                   <div className="toc-h3-inner">
-                    <a href={`#${item.id}`} onClick={() => onSelect(item.id)}>{item.label}</a>
+                    <a href={`#${item.id}`} onClick={(e) => handleClick(e, item.id)}>{item.label}</a>
                   </div>
                 ) : (
-                  <a href={`#${item.id}`} onClick={() => onSelect(item.id)}>{item.label}</a>
+                  <a href={`#${item.id}`} onClick={(e) => handleClick(e, item.id)}>{item.label}</a>
                 )}
               </li>
             );
