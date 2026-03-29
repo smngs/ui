@@ -305,10 +305,6 @@ pre, img, table {
     font-size: var(--text-xs);
     overflow-x: auto;
   }
-
-  ul, ol {
-    padding-left: var(--space-4);
-  }
 }
 
 /* ===== CodeBlock Collapsible ===== */
