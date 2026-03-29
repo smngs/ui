@@ -810,23 +810,21 @@ export default function App() {
           <nav className="smngs-navbar">
             <Avatar src="https://github.com/smngs.png" fallback="SM" size="sm" />
             <a href="#navbar" className="smngs-navbar-title">@smngs/ui</a>
-            <NavigationMenu>
-              <NavigationMenuItem>
-                <NavigationMenuLink href="#navbar">Home</NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <NavigationMenuLink href="#button">Button</NavigationMenuLink>
-                  <NavigationMenuLink href="#badge">Badge</NavigationMenuLink>
-                  <NavigationMenuLink href="#card">Card</NavigationMenuLink>
-                  <NavigationMenuLink href="#tabs">Tabs</NavigationMenuLink>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink href="#navbar">Blog</NavigationMenuLink>
-              </NavigationMenuItem>
-            </NavigationMenu>
+            <div className="smngs-navbar-links">
+              <Button variant="nav" asChild><a href="#navbar">Home</a></Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="nav">Components ▾</Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem asChild><a href="#button">Button</a></DropdownMenuItem>
+                  <DropdownMenuItem asChild><a href="#badge">Badge</a></DropdownMenuItem>
+                  <DropdownMenuItem asChild><a href="#card">Card</a></DropdownMenuItem>
+                  <DropdownMenuItem asChild><a href="#tabs">Tabs</a></DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <Button variant="nav" asChild><a href="#navbar">Blog</a></Button>
+            </div>
             <div className="smngs-navbar-right">
               <Button variant="nav"><FontAwesomeIcon icon={faMoon} /></Button>
             </div>
@@ -835,21 +833,19 @@ export default function App() {
 <nav className="smngs-navbar">
   <Avatar src="/avatar.png" fallback="SM" size="sm" />
   <a href="/" className="smngs-navbar-title">My App</a>
-  <NavigationMenu>
-    <NavigationMenuItem>
-      <NavigationMenuLink href="/">Home</NavigationMenuLink>
-    </NavigationMenuItem>
-    <NavigationMenuItem>
-      <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-      <NavigationMenuContent>
-        <NavigationMenuLink href="/button">Button</NavigationMenuLink>
-        <NavigationMenuLink href="/badge">Badge</NavigationMenuLink>
-      </NavigationMenuContent>
-    </NavigationMenuItem>
-    <NavigationMenuItem>
-      <NavigationMenuLink href="/blog">Blog</NavigationMenuLink>
-    </NavigationMenuItem>
-  </NavigationMenu>
+  <div className="smngs-navbar-links">
+    <Button variant="nav" asChild><a href="/">Home</a></Button>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="nav">Components ▾</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem asChild><a href="/button">Button</a></DropdownMenuItem>
+        <DropdownMenuItem asChild><a href="/badge">Badge</a></DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+    <Button variant="nav" asChild><a href="/blog">Blog</a></Button>
+  </div>
   <div className="smngs-navbar-right">
     {/* icon buttons, theme toggle, etc. */}
   </div>
