@@ -1,7 +1,7 @@
 import React from "react";
 import { Slot } from "@radix-ui/react-slot";
 
-type ButtonVariant = "primary" | "ghost" | "nav" | "nav-active";
+type ButtonVariant = "primary" | "ghost" | "danger" | "nav" | "nav-active";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean;
