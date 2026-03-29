@@ -40,6 +40,7 @@ const TOC_ITEMS: TocItem[] = [
   { id: "color-palette", label: "Color Palette",   level: 1 },
   { id: "typography",    label: "Typography",       level: 1 },
   { id: "components",   label: "Components",        level: 1 },
+  { id: "blockquote",   label: "Blockquote",        level: 2 },
   { id: "button",       label: "Button",            level: 2 },
   { id: "badge",        label: "Badge",             level: 2 },
   { id: "avatar",       label: "Avatar",            level: 2 },
@@ -376,10 +377,6 @@ export default function App() {
           <blockquote>
             Design is not just what it looks like and feels like. Design is how it works. — Steve Jobs
           </blockquote>
-          <Blockquote variant="info">This is an informational note. Use it to provide helpful context or tips.</Blockquote>
-          <Blockquote variant="success">Operation completed successfully. Your changes have been saved.</Blockquote>
-          <Blockquote variant="warning">Proceed with caution. This action may have unintended side effects.</Blockquote>
-          <Blockquote variant="danger">This action is irreversible. Please confirm before continuing.</Blockquote>
           <pre><code>{`function greet(name: string): string {
   return \`Hello, \${name}!\`;
 }`}</code></pre>
@@ -400,6 +397,24 @@ export default function App() {
         <div className="section" id="components">
           <h1>Components</h1>
         </div>
+
+        {/* Blockquote */}
+        <Section title="Blockquote" id="blockquote">
+          <blockquote>Default — Design is not just what it looks like and feels like. Design is how it works. — Steve Jobs</blockquote>
+          <Blockquote variant="info">Info — This is an informational note. Use it to provide helpful context or tips.</Blockquote>
+          <Blockquote variant="success">Success — Operation completed successfully. Your changes have been saved.</Blockquote>
+          <Blockquote variant="warning">Warning — Proceed with caution. This action may have unintended side effects.</Blockquote>
+          <Blockquote variant="danger">Danger — This action is irreversible. Please confirm before continuing.</Blockquote>
+          <CodeBlock isDark={isDark} code={`
+<blockquote>Default quote text</blockquote>
+<Blockquote variant="info">Info message</Blockquote>
+<Blockquote variant="success">Success message</Blockquote>
+<Blockquote variant="warning">Warning message</Blockquote>
+<Blockquote variant="danger">Danger message</Blockquote>
+          `} />
+        </Section>
+
+        <Separator />
 
         {/* Button */}
         <Section title="Button" id="button">
