@@ -49,6 +49,10 @@ blockquote {
   font-style: italic;
   line-height: var(--leading-loose);
 }
+.smngs-blockquote-info    { border-left-color: var(--color-info); }
+.smngs-blockquote-success { border-left-color: var(--color-success); }
+.smngs-blockquote-warning { border-left-color: var(--color-warning); }
+.smngs-blockquote-danger  { border-left-color: var(--color-danger); }
 ul, ol {
   padding-left: 0;
   list-style-position: inside;
