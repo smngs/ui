@@ -463,7 +463,7 @@ export default function App() {
               href="https://www.radix-ui.com"
               title="Radix UI — Unstyled, accessible components for React"
               description="An open source component library optimized for fast development, easy maintenance, and accessibility."
-              image="https://www.radix-ui.com/social/default.png"
+              image="https://radix-ui.com/social/themes.png"
               favicon="https://www.radix-ui.com/favicon.png"
             />
           </div>
