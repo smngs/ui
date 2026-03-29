@@ -539,6 +539,12 @@ export default function App() {
               </CardBody>
             </Card>
           </div>
+          <CodeBlock isDark={isDark} code={`
+<Card>
+  <CardHeader>Title</CardHeader>
+  <CardBody>Content goes here.</CardBody>
+</Card>
+          `} />
         </Section>
 
         <Separator />
