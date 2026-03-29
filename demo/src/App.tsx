@@ -32,6 +32,8 @@ import {
   Tooltip,
   Grid, GridItem,
   Blockquote,
+  LinkCard,
+  Navbar, NavbarTitle, NavbarLinks, NavbarRight, NavbarHamburger, NavbarMobileMenu, NavbarDropdownContent,
 } from "@smngs/ui";
 
 type TocItem = { id: string; label: string; level: 1 | 2 };
@@ -42,6 +44,7 @@ const TOC_ITEMS: TocItem[] = [
   { id: "components",   label: "Components",        level: 1 },
   { id: "blockquote",   label: "Blockquote",        level: 2 },
   { id: "button",       label: "Button",            level: 2 },
+  { id: "link-card",   label: "LinkCard",          level: 2 },
   { id: "badge",        label: "Badge",             level: 2 },
   { id: "avatar",       label: "Avatar",            level: 2 },
   { id: "card",         label: "Card",              level: 2 },
@@ -51,6 +54,7 @@ const TOC_ITEMS: TocItem[] = [
   { id: "dialog",       label: "Dialog",            level: 2 },
   { id: "popover",      label: "Popover / HoverCard", level: 2 },
   { id: "dropdown-menu",  label: "DropdownMenu",    level: 2 },
+  { id: "navbar",          label: "Navbar",            level: 2 },
   { id: "navigation-menu", label: "NavigationMenu", level: 2 },
   { id: "form",         label: "Form",              level: 2 },
   { id: "toast",        label: "Toast",             level: 2 },
@@ -425,12 +429,54 @@ export default function App() {
             <Button variant="primary" disabled>Disabled</Button>
             <Button variant="primary" asChild><a href="#top">Link</a></Button>
           </div>
+          <div className="row" style={{ alignItems: "center" }}>
+            <Button variant="primary" size="sm">Small</Button>
+            <Button variant="primary" size="md">Medium</Button>
+            <Button variant="primary" size="lg">Large</Button>
+            <Button variant="ghost" size="sm">Ghost sm</Button>
+            <Button variant="ghost" size="lg">Ghost lg</Button>
+          </div>
           <CodeBlock isDark={isDark} code={`
 <Button variant="primary">Primary</Button>
 <Button variant="ghost">Ghost</Button>
 <Button variant="danger">Danger</Button>
 <Button variant="primary" disabled>Disabled</Button>
 <Button variant="primary" asChild><a href="/page">Link</a></Button>
+
+{/* size: "sm" | "md" (default) | "lg" */}
+<Button variant="primary" size="sm">Small</Button>
+<Button variant="primary" size="md">Medium</Button>
+<Button variant="primary" size="lg">Large</Button>
+          `} />
+        </Section>
+
+        <Separator />
+
+        {/* LinkCard */}
+        <Section title="LinkCard" id="link-card">
+          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+            <LinkCard
+              href="https://github.com/smngs/ui"
+              title="smngs/ui — Radix UI based design system"
+              description="A minimal component library built on Radix UI primitives with design tokens and dark mode support."
+              favicon="https://github.com/favicon.ico"
+            />
+            <LinkCard
+              href="https://www.radix-ui.com"
+              title="Radix UI — Unstyled, accessible components for React"
+              description="An open source component library optimized for fast development, easy maintenance, and accessibility."
+              image="https://radix-ui.com/social/themes.png"
+              favicon="https://www.radix-ui.com/favicon.png"
+            />
+          </div>
+          <CodeBlock isDark={isDark} code={`
+<LinkCard
+  href="https://example.com"
+  title="Page Title"
+  description="A brief description of the linked page."
+  image="https://example.com/ogp.png"
+  favicon="https://example.com/favicon.ico"
+/>
           `} />
         </Section>
 
@@ -443,9 +489,19 @@ export default function App() {
             <Badge asChild><a href="https://github.com" target="_blank" rel="noreferrer">GitHub</a></Badge>
             <Badge asChild><a href="https://orcid.org" target="_blank" rel="noreferrer">ORCID</a></Badge>
           </div>
+          <div className="row" style={{ alignItems: "center" }}>
+            <Badge size="sm">Small</Badge>
+            <Badge size="md">Medium</Badge>
+            <Badge size="lg">Large</Badge>
+          </div>
           <CodeBlock isDark={isDark} code={`
 <Badge>Default</Badge>
 <Badge asChild><a href="https://github.com">GitHub</a></Badge>
+
+{/* size: "sm" | "md" (default) | "lg" */}
+<Badge size="sm">Small</Badge>
+<Badge size="md">Medium</Badge>
+<Badge size="lg">Large</Badge>
           `} />
         </Section>
 
@@ -471,7 +527,7 @@ export default function App() {
 
         {/* Card */}
         <Section title="Card" id="card">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(24rem, 1fr))", gap: "var(--space-2)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(24rem, 100%), 1fr))", gap: "var(--space-2)" }}>
             <Card>
               <CardHeader>User Profile</CardHeader>
               <CardBody>
@@ -495,6 +551,12 @@ export default function App() {
               </CardBody>
             </Card>
           </div>
+          <CodeBlock isDark={isDark} code={`
+<Card>
+  <CardHeader>Title</CardHeader>
+  <CardBody>Content goes here.</CardBody>
+</Card>
+          `} />
         </Section>
 
         <Separator />
@@ -517,6 +579,26 @@ export default function App() {
               <p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Items you have recently viewed appear here.</p>
             </TabsContent>
           </Tabs>
+          <Tabs defaultValue="a" size="sm">
+            <TabsList>
+              <TabsTrigger value="a">Small</TabsTrigger>
+              <TabsTrigger value="b">Tabs</TabsTrigger>
+              <TabsTrigger value="c">Example</TabsTrigger>
+            </TabsList>
+            <TabsContent value="a"><p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Small size tab content.</p></TabsContent>
+            <TabsContent value="b"><p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Tab B.</p></TabsContent>
+            <TabsContent value="c"><p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Tab C.</p></TabsContent>
+          </Tabs>
+          <Tabs defaultValue="a" size="lg">
+            <TabsList>
+              <TabsTrigger value="a">Large</TabsTrigger>
+              <TabsTrigger value="b">Tabs</TabsTrigger>
+              <TabsTrigger value="c">Example</TabsTrigger>
+            </TabsList>
+            <TabsContent value="a"><p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Large size tab content.</p></TabsContent>
+            <TabsContent value="b"><p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Tab B.</p></TabsContent>
+            <TabsContent value="c"><p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>Tab C.</p></TabsContent>
+          </Tabs>
           <CodeBlock isDark={isDark} code={`
 <Tabs defaultValue="tab1">
   <TabsList>
@@ -526,6 +608,10 @@ export default function App() {
   <TabsContent value="tab1">Content for Tab 1</TabsContent>
   <TabsContent value="tab2">Content for Tab 2</TabsContent>
 </Tabs>
+
+{/* size: "sm" | "md" (default) | "lg" */}
+<Tabs defaultValue="tab1" size="sm">...</Tabs>
+<Tabs defaultValue="tab1" size="lg">...</Tabs>
           `} />
         </Section>
 
@@ -715,6 +801,67 @@ export default function App() {
     <DropdownMenuItem disabled>Delete (disabled)</DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
+          `} />
+        </Section>
+
+        <Separator />
+
+        {/* Navbar */}
+        <Section title="Navbar" id="navbar">
+          <Navbar>
+            <Avatar src="https://github.com/smngs.png" fallback="SM" size="sm" />
+            <NavbarTitle href="#navbar">@smngs/ui</NavbarTitle>
+            <NavbarLinks>
+              <Button variant="nav" asChild><a href="#navbar">Home</a></Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="nav">Components ▾</Button>
+                </DropdownMenuTrigger>
+                <NavbarDropdownContent>
+                  <DropdownMenuItem onSelect={() => location.hash = "#button"}>Button</DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => location.hash = "#badge"}>Badge</DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => location.hash = "#card"}>Card</DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => location.hash = "#tabs"}>Tabs</DropdownMenuItem>
+                </NavbarDropdownContent>
+              </DropdownMenu>
+              <Button variant="nav" asChild><a href="#navbar">Blog</a></Button>
+            </NavbarLinks>
+            <NavbarRight>
+              <Button variant="nav"><FontAwesomeIcon icon={faMoon} /></Button>
+              <NavbarHamburger />
+            </NavbarRight>
+            <NavbarMobileMenu>
+              <a href="#navbar">Home</a>
+              <a href="#button">Components</a>
+              <a href="#navbar">Blog</a>
+            </NavbarMobileMenu>
+          </Navbar>
+          <CodeBlock isDark={isDark} code={`
+<Navbar>
+  <Avatar src="/avatar.png" fallback="SM" size="sm" />
+  <NavbarTitle href="/">My App</NavbarTitle>
+  <NavbarLinks>
+    <Button variant="nav" asChild><a href="/">Home</a></Button>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="nav">Components ▾</Button>
+      </DropdownMenuTrigger>
+      <NavbarDropdownContent>
+        <DropdownMenuItem onSelect={() => router.push("/button")}>Button</DropdownMenuItem>
+        <DropdownMenuItem onSelect={() => router.push("/badge")}>Badge</DropdownMenuItem>
+      </NavbarDropdownContent>
+    </DropdownMenu>
+    <Button variant="nav" asChild><a href="/blog">Blog</a></Button>
+  </NavbarLinks>
+  <NavbarRight>
+    {/* icon buttons, theme toggle, etc. */}
+    <NavbarHamburger />
+  </NavbarRight>
+  <NavbarMobileMenu>
+    <a href="/">Home</a>
+    <a href="/blog">Blog</a>
+  </NavbarMobileMenu>
+</Navbar>
           `} />
         </Section>
 
