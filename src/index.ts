@@ -1,4 +1,5 @@
 export { Avatar } from "./components/Avatar";
+export { Blockquote } from "./components/Blockquote";
 export { Badge } from "./components/Badge";
 export { Button } from "./components/Button";
 export { Card, CardHeader, CardBody } from "./components/Card";
