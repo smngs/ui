@@ -1,19 +1,71 @@
+import { useState } from "react";
 import {
   AspectRatio,
   Card, CardBody,
   Grid, GridItem,
   ScrollArea,
   Separator,
+  Toolbar, ToolbarButton, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem,
 } from "@smngs/ui";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faRotateLeft, faRotateRight,
+  faBold, faItalic, faUnderline,
+  faAlignLeft, faAlignCenter, faAlignRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { Section } from "../Section";
 import { CodeBlock } from "../CodeBlock";
 
 export function LayoutSection({ isDark }: { isDark: boolean }) {
+  const [activeFormats, setActiveFormats] = useState<string[]>([]);
+  const [activeAlign, setActiveAlign] = useState("left");
+
   return (
     <>
       <div className="section" id="layout">
         <h2>Layout</h2>
       </div>
+
+      {/* Toolbar */}
+      <Section title="Toolbar" id="toolbar" level={3}>
+        <Toolbar aria-label="Text formatting">
+          <ToolbarButton aria-label="Undo"><FontAwesomeIcon icon={faRotateLeft} /></ToolbarButton>
+          <ToolbarButton aria-label="Redo"><FontAwesomeIcon icon={faRotateRight} /></ToolbarButton>
+          <ToolbarSeparator />
+          <ToolbarToggleGroup type="multiple" value={activeFormats} onValueChange={setActiveFormats} aria-label="Text format">
+            <ToolbarToggleItem value="bold" aria-label="Bold"><FontAwesomeIcon icon={faBold} /></ToolbarToggleItem>
+            <ToolbarToggleItem value="italic" aria-label="Italic"><FontAwesomeIcon icon={faItalic} /></ToolbarToggleItem>
+            <ToolbarToggleItem value="underline" aria-label="Underline"><FontAwesomeIcon icon={faUnderline} /></ToolbarToggleItem>
+          </ToolbarToggleGroup>
+          <ToolbarSeparator />
+          <ToolbarToggleGroup type="single" value={activeAlign} onValueChange={(v) => v && setActiveAlign(v)} aria-label="Alignment">
+            <ToolbarToggleItem value="left" aria-label="Left"><FontAwesomeIcon icon={faAlignLeft} /></ToolbarToggleItem>
+            <ToolbarToggleItem value="center" aria-label="Center"><FontAwesomeIcon icon={faAlignCenter} /></ToolbarToggleItem>
+            <ToolbarToggleItem value="right" aria-label="Right"><FontAwesomeIcon icon={faAlignRight} /></ToolbarToggleItem>
+          </ToolbarToggleGroup>
+        </Toolbar>
+        <CodeBlock isDark={isDark} code={`
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRotateLeft, faRotateRight, faBold, faItalic, faAlignLeft, faAlignCenter } from "@fortawesome/free-solid-svg-icons";
+
+<Toolbar aria-label="Text formatting">
+  <ToolbarButton aria-label="Undo"><FontAwesomeIcon icon={faRotateLeft} /></ToolbarButton>
+  <ToolbarButton aria-label="Redo"><FontAwesomeIcon icon={faRotateRight} /></ToolbarButton>
+  <ToolbarSeparator />
+  <ToolbarToggleGroup type="multiple" value={formats} onValueChange={setFormats} aria-label="Format">
+    <ToolbarToggleItem value="bold" aria-label="Bold"><FontAwesomeIcon icon={faBold} /></ToolbarToggleItem>
+    <ToolbarToggleItem value="italic" aria-label="Italic"><FontAwesomeIcon icon={faItalic} /></ToolbarToggleItem>
+  </ToolbarToggleGroup>
+  <ToolbarSeparator />
+  <ToolbarToggleGroup type="single" value={align} onValueChange={(v) => v && setAlign(v)} aria-label="Align">
+    <ToolbarToggleItem value="left" aria-label="Left"><FontAwesomeIcon icon={faAlignLeft} /></ToolbarToggleItem>
+    <ToolbarToggleItem value="center" aria-label="Center"><FontAwesomeIcon icon={faAlignCenter} /></ToolbarToggleItem>
+  </ToolbarToggleGroup>
+</Toolbar>
+        `} />
+      </Section>
+
+      <Separator />
 
       {/* Grid */}
       <Section title="Grid" id="grid" level={3}>
