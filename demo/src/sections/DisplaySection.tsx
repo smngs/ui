@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Avatar,
   Badge,
@@ -6,12 +7,22 @@ import {
   Card, CardBody, CardHeader,
   LinkCard,
   Separator,
+  Toggle,
+  ToggleGroup, ToggleGroupItem,
   Tooltip,
 } from "@smngs/ui";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBold, faItalic, faUnderline, faStrikethrough,
+  faAlignLeft, faAlignCenter, faAlignRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { Section } from "../Section";
 import { CodeBlock } from "../CodeBlock";
 
 export function DisplaySection({ isDark }: { isDark: boolean }) {
+  const [alignment, setAlignment] = useState("left");
+  const [formats, setFormats] = useState<string[]>([]);
+
   return (
     <>
       <div className="section" id="display">
@@ -187,6 +198,88 @@ export function DisplaySection({ isDark }: { isDark: boolean }) {
 <Tooltip content="Helpful hint" side="top">
   <Button variant="ghost">Hover me</Button>
 </Tooltip>
+        `} />
+      </Section>
+
+      <Separator />
+
+      {/* Toggle */}
+      <Section title="Toggle" id="toggle" level={3}>
+        <div className="row">
+          <Toggle aria-label="Bold"><FontAwesomeIcon icon={faBold} /></Toggle>
+          <Toggle variant="outline" defaultPressed aria-label="Italic"><FontAwesomeIcon icon={faItalic} /></Toggle>
+          <Toggle variant="outline" disabled aria-label="Strikethrough"><FontAwesomeIcon icon={faStrikethrough} /></Toggle>
+        </div>
+        <div className="row">
+          <Toggle size="sm" aria-label="Small">Small</Toggle>
+          <Toggle size="md" aria-label="Medium">Medium</Toggle>
+          <Toggle size="lg" aria-label="Large">Large</Toggle>
+        </div>
+        <CodeBlock isDark={isDark} code={`
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBold, faItalic, faStrikethrough } from "@fortawesome/free-solid-svg-icons";
+
+<Toggle aria-label="Bold"><FontAwesomeIcon icon={faBold} /></Toggle>
+<Toggle variant="outline" defaultPressed aria-label="Italic"><FontAwesomeIcon icon={faItalic} /></Toggle>
+<Toggle disabled aria-label="Strikethrough"><FontAwesomeIcon icon={faStrikethrough} /></Toggle>
+
+{/* size: "sm" | "md" (default) | "lg" */}
+{/* variant: "default" | "outline" */}
+        `} />
+      </Section>
+
+      <Separator />
+
+      {/* ToggleGroup */}
+      <Section title="ToggleGroup" id="toggle-group" level={3}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+          <div>
+            <div className="section-label" style={{ marginBottom: "var(--space-2)" }}>
+              type="single" — alignment: <strong>{alignment}</strong>
+            </div>
+            <ToggleGroup type="single" value={alignment} onValueChange={(v) => v && setAlignment(v)}>
+              <ToggleGroupItem value="left" aria-label="Align left"><FontAwesomeIcon icon={faAlignLeft} /></ToggleGroupItem>
+              <ToggleGroupItem value="center" aria-label="Align center"><FontAwesomeIcon icon={faAlignCenter} /></ToggleGroupItem>
+              <ToggleGroupItem value="right" aria-label="Align right"><FontAwesomeIcon icon={faAlignRight} /></ToggleGroupItem>
+            </ToggleGroup>
+          </div>
+          <div>
+            <div className="section-label" style={{ marginBottom: "var(--space-2)" }}>
+              type="multiple" — formats: <strong>{formats.length ? formats.join(", ") : "none"}</strong>
+            </div>
+            <ToggleGroup type="multiple" value={formats} onValueChange={setFormats}>
+              <ToggleGroupItem value="bold" aria-label="Bold"><FontAwesomeIcon icon={faBold} /></ToggleGroupItem>
+              <ToggleGroupItem value="italic" aria-label="Italic"><FontAwesomeIcon icon={faItalic} /></ToggleGroupItem>
+              <ToggleGroupItem value="underline" aria-label="Underline"><FontAwesomeIcon icon={faUnderline} /></ToggleGroupItem>
+              <ToggleGroupItem value="strikethrough" aria-label="Strikethrough"><FontAwesomeIcon icon={faStrikethrough} /></ToggleGroupItem>
+            </ToggleGroup>
+          </div>
+          <ToggleGroup type="single" variant="outline" defaultValue="md">
+            <ToggleGroupItem value="sm">S</ToggleGroupItem>
+            <ToggleGroupItem value="md">M</ToggleGroupItem>
+            <ToggleGroupItem value="lg">L</ToggleGroupItem>
+            <ToggleGroupItem value="xl">XL</ToggleGroupItem>
+          </ToggleGroup>
+        </div>
+        <CodeBlock isDark={isDark} code={`
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBold, faItalic, faUnderline, faAlignLeft, faAlignCenter, faAlignRight } from "@fortawesome/free-solid-svg-icons";
+
+{/* Single selection */}
+<ToggleGroup type="single" value={val} onValueChange={(v) => v && setVal(v)}>
+  <ToggleGroupItem value="left" aria-label="Align left"><FontAwesomeIcon icon={faAlignLeft} /></ToggleGroupItem>
+  <ToggleGroupItem value="center" aria-label="Align center"><FontAwesomeIcon icon={faAlignCenter} /></ToggleGroupItem>
+  <ToggleGroupItem value="right" aria-label="Align right"><FontAwesomeIcon icon={faAlignRight} /></ToggleGroupItem>
+</ToggleGroup>
+
+{/* Multiple selection */}
+<ToggleGroup type="multiple" value={formats} onValueChange={setFormats}>
+  <ToggleGroupItem value="bold" aria-label="Bold"><FontAwesomeIcon icon={faBold} /></ToggleGroupItem>
+  <ToggleGroupItem value="italic" aria-label="Italic"><FontAwesomeIcon icon={faItalic} /></ToggleGroupItem>
+  <ToggleGroupItem value="underline" aria-label="Underline"><FontAwesomeIcon icon={faUnderline} /></ToggleGroupItem>
+</ToggleGroup>
+
+{/* variant: "default" | "outline", size: "sm" | "md" | "lg" */}
         `} />
       </Section>
 
