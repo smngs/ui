@@ -424,8 +424,9 @@ pre, img, table {
   position: sticky;
   top: calc(var(--header-top) * 2 + 4rem);
   max-height: calc(100vh - 8rem);
+  overflow-x: hidden;
   overflow-y: auto;
-  width: 16rem;
+  width: min(24rem, 100%);
   padding: var(--space-3) var(--space-2) var(--space-3) var(--space-3);
 }
 
@@ -462,17 +463,10 @@ pre, img, table {
   display: inline-block;
   flex-shrink: 0;
   width: 0.2em;
+  height: 0.6em;
   border-radius: 0.5em;
   background-color: var(--color-divider);
   transition: background-color var(--ease-fast);
-}
-
-.toc-item-h1 > a::before {
-  height: 1em;
-}
-
-.toc-item-h2 > a::before {
-  height: 0.7em;
 }
 
 .toc-item a:hover {
@@ -493,15 +487,40 @@ pre, img, table {
 }
 
 .toc-item-h2 {
-  padding-left: var(--space-3);
+  padding-left: var(--space-2);
 }
 
-.toc-item-active > a {
+.toc-item-h2 > a {
+  font-weight: var(--font-medium);
+}
+
+.toc-item-h3 {
+  padding-left: calc(var(--space-3) + var(--space-2));
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition: grid-template-rows 0.25s ease, opacity 0.2s ease, margin-bottom 0.25s ease;
+}
+
+.toc-h3-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.toc-h3-hidden {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  pointer-events: none;
+  margin-bottom: 0;
+}
+
+
+.toc-item-active a {
   color: var(--color-brand);
   font-weight: var(--font-medium);
 }
 
-.toc-item-active > a::before {
+.toc-item-active a::before {
   background-color: var(--color-brand);
 }
 
