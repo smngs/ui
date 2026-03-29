@@ -816,7 +816,7 @@ export default function App() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="nav">Components ▾</Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
+                <DropdownMenuContent className="smngs-navbar-dropdown">
                   <DropdownMenuItem onSelect={() => location.hash = "#button"}>Button</DropdownMenuItem>
                   <DropdownMenuItem onSelect={() => location.hash = "#badge"}>Badge</DropdownMenuItem>
                   <DropdownMenuItem onSelect={() => location.hash = "#card"}>Card</DropdownMenuItem>
