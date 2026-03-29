@@ -138,6 +138,7 @@ export default function App() {
   );
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState("");
+  const [activeSwatchToken, setActiveSwatchToken] = useState<string | null>(null);
   const suppressObserver = React.useRef(false);
   const suppressTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -266,53 +267,64 @@ export default function App() {
         {/* Color Palette */}
         <Section title="Color Palette" id="color-palette" level={1}>
           {(() => {
-            const brand = [
-              { token: "--color-brand",  hex: "#30a3b3", label: "Brand",  light: false },
-              { token: "--color-accent", hex: "#EA9B56", label: "Accent", light: false },
+            type SwatchDef = { token: string; hex: string; label: string; light: boolean; usages: string[] };
+            const brand: SwatchDef[] = [
+              { token: "--color-brand",  hex: "#30a3b3", label: "Brand",  light: false, usages: ["Button (primary)", "Badge (brand)", "Links", "Section accent bars", "TOC active item"] },
+              { token: "--color-accent", hex: "#EA9B56", label: "Accent", light: false, usages: ["Badge (accent)", "Code syntax: strings / variables"] },
             ];
-            const semantic = [
-              { token: "--color-success", hex: "#34c98f", label: "Success", light: false },
-              { token: "--color-warning", hex: "#f4a44d", label: "Warning", light: false },
-              { token: "--color-info",    hex: "#4a7fd4", label: "Info",    light: false },
-              { token: "--color-danger",  hex: "#f05555", label: "Danger",  light: false },
+            const semantic: SwatchDef[] = [
+              { token: "--color-success", hex: "#34c98f", label: "Success", light: false, usages: ["Badge (success)", "Toast (success)"] },
+              { token: "--color-warning", hex: "#f4a44d", label: "Warning", light: false, usages: ["Badge (warning)", "Toast (warning)"] },
+              { token: "--color-info",    hex: "#4a7fd4", label: "Info",    light: false, usages: ["Badge (info)", "Toast (info)", "Code syntax: numbers / functions"] },
+              { token: "--color-danger",  hex: "#f05555", label: "Danger",  light: false, usages: ["Badge (danger)", "AlertDialog trigger", "Code syntax: errors"] },
             ];
-            const base = isDark ? [
-              { token: "--color-text",     hex: "#e8e8e8", label: "Text",       light: true  },
-              { token: "--color-muted",    hex: "#aaaaaa", label: "Muted",      light: true  },
-              { token: "--color-subtle",   hex: "#777777", label: "Subtle",     light: false },
-              { token: "--color-bg",       hex: "#222222", label: "Background", light: false },
-              { token: "--color-bg-code",  hex: "#333333", label: "Code BG",    light: false },
-              { token: "--color-surface",  hex: "#2d2d2d", label: "Surface",    light: false },
-              { token: "--color-border",   hex: "#484848", label: "Border",     light: false },
-              { token: "--color-divider",  hex: "#3a3a3a", label: "Divider",    light: false },
-              { token: "--color-badge",    hex: "#5e5e5e", label: "Badge",      light: false },
-              { token: "--color-white",    hex: "#ffffff", label: "White",      light: true  },
+            const base: SwatchDef[] = isDark ? [
+              { token: "--color-text",     hex: "#e8e8e8", label: "Text",       light: true,  usages: ["Body text", "Headings"] },
+              { token: "--color-muted",    hex: "#aaaaaa", label: "Muted",      light: true,  usages: ["h2 / h3", "Secondary text"] },
+              { token: "--color-subtle",   hex: "#777777", label: "Subtle",     light: false, usages: ["Labels", "Placeholder text", "Section labels"] },
+              { token: "--color-bg",       hex: "#222222", label: "Background", light: false, usages: ["Page background", "Nav spacer"] },
+              { token: "--color-bg-code",  hex: "#333333", label: "Code BG",    light: false, usages: ["Code blocks", "Input fields", "Collapsible trigger"] },
+              { token: "--color-surface",  hex: "#2d2d2d", label: "Surface",    light: false, usages: ["Card", "Dialog", "Popover", "Dropdown", "Select content"] },
+              { token: "--color-border",   hex: "#484848", label: "Border",     light: false, usages: ["Input borders", "Dropdown borders"] },
+              { token: "--color-divider",  hex: "#3a3a3a", label: "Divider",    light: false, usages: ["Separator", "Accordion borders"] },
+              { token: "--color-badge",    hex: "#5e5e5e", label: "Badge",      light: false, usages: ["Badge (default) background"] },
+              { token: "--color-white",    hex: "#ffffff", label: "White",      light: true,  usages: ["Text on brand backgrounds", "Button (primary) text", "Navbar links"] },
             ] : [
-              { token: "--color-text",     hex: "#2f2f2f", label: "Text",       light: false },
-              { token: "--color-muted",    hex: "#555555", label: "Muted",      light: false },
-              { token: "--color-subtle",   hex: "#888888", label: "Subtle",     light: false },
-              { token: "--color-bg",       hex: "#f6f6f6", label: "Background", light: true  },
-              { token: "--color-bg-code",  hex: "#e8eaec", label: "Code BG",    light: true  },
-              { token: "--color-surface",  hex: "#ffffff", label: "Surface",    light: true  },
-              { token: "--color-border",   hex: "#cccccc", label: "Border",     light: true  },
-              { token: "--color-divider",  hex: "#e0e0e0", label: "Divider",    light: true  },
-              { token: "--color-badge",    hex: "#5e5e5e", label: "Badge",      light: false },
-              { token: "--color-white",    hex: "#ffffff", label: "White",      light: true  },
+              { token: "--color-text",     hex: "#2f2f2f", label: "Text",       light: false, usages: ["Body text", "Headings"] },
+              { token: "--color-muted",    hex: "#555555", label: "Muted",      light: false, usages: ["h2 / h3", "Secondary text"] },
+              { token: "--color-subtle",   hex: "#888888", label: "Subtle",     light: false, usages: ["Labels", "Placeholder text", "Section labels"] },
+              { token: "--color-bg",       hex: "#f6f6f6", label: "Background", light: true,  usages: ["Page background", "Nav spacer"] },
+              { token: "--color-bg-code",  hex: "#e8eaec", label: "Code BG",    light: true,  usages: ["Code blocks", "Input fields", "Collapsible trigger"] },
+              { token: "--color-surface",  hex: "#ffffff", label: "Surface",    light: true,  usages: ["Card", "Dialog", "Popover", "Dropdown", "Select content"] },
+              { token: "--color-border",   hex: "#cccccc", label: "Border",     light: true,  usages: ["Input borders", "Dropdown borders"] },
+              { token: "--color-divider",  hex: "#e0e0e0", label: "Divider",    light: true,  usages: ["Separator", "Accordion borders"] },
+              { token: "--color-badge",    hex: "#5e5e5e", label: "Badge",      light: false, usages: ["Badge (default) background"] },
+              { token: "--color-white",    hex: "#ffffff", label: "White",      light: true,  usages: ["Text on brand backgrounds", "Button (primary) text", "Navbar links"] },
             ];
-            const renderSwatch = ({ token, hex, label, light }: { token: string; hex: string; label: string; light: boolean }) => (
-              <div key={token} className="token-swatch">
+            const renderSwatch = ({ token, hex, label, light, usages }: SwatchDef) => {
+              const isActive = activeSwatchToken === token;
+              return (
                 <div
-                  className="token-swatch-color"
-                  style={{ background: `var(${token})`, color: light ? "#2f2f2f" : "#f6f6f6" }}
+                  key={token}
+                  className={`token-swatch${isActive ? " token-swatch-active" : ""}`}
+                  onClick={() => setActiveSwatchToken(isActive ? null : token)}
                 >
-                  {hex}
+                  <div
+                    className="token-swatch-color"
+                    style={{ background: `var(${token})`, color: light ? "#2f2f2f" : "#f6f6f6" }}
+                  >
+                    {hex}
+                  </div>
+                  <div className="token-swatch-info">
+                    <div className="token-swatch-name">{label}</div>
+                    <div className="token-swatch-token">{token}</div>
+                    <div className="token-swatch-usage">
+                      {usages.map((u) => <div key={u} className="token-swatch-usage-item">{u}</div>)}
+                    </div>
+                  </div>
                 </div>
-                <div className="token-swatch-info">
-                  <div className="token-swatch-name">{label}</div>
-                  <div className="token-swatch-token">{token}</div>
-                </div>
-              </div>
-            );
+              );
+            };
             return (
               <>
                 <div className="section-label">Brand</div>
