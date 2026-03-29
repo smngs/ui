@@ -31,6 +31,7 @@ import {
   Toast, ToastProvider, ToastViewport,
   Tooltip,
   Grid, GridItem,
+  Blockquote,
 } from "@smngs/ui";
 
 type TocItem = { id: string; label: string; level: 1 | 2 };
@@ -375,6 +376,10 @@ export default function App() {
           <blockquote>
             Design is not just what it looks like and feels like. Design is how it works. — Steve Jobs
           </blockquote>
+          <Blockquote variant="info">This is an informational note. Use it to provide helpful context or tips.</Blockquote>
+          <Blockquote variant="success">Operation completed successfully. Your changes have been saved.</Blockquote>
+          <Blockquote variant="warning">Proceed with caution. This action may have unintended side effects.</Blockquote>
+          <Blockquote variant="danger">This action is irreversible. Please confirm before continuing.</Blockquote>
           <pre><code>{`function greet(name: string): string {
   return \`Hello, \${name}!\`;
 }`}</code></pre>
