@@ -70,6 +70,7 @@ export {
   ToolbarToggleGroup,
   ToolbarToggleItem,
   ToolbarLink,
+  ToolbarSpacer,
 } from "./components/layout/Toolbar";
 export { LinkCard } from "./components/display/LinkCard";
 export { Toggle } from "./components/display/Toggle";

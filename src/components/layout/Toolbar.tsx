@@ -118,6 +118,10 @@ export function ToolbarToggleItem({
   );
 }
 
+export function ToolbarSpacer() {
+  return <div style={{ flex: 1 }} />;
+}
+
 export function ToolbarLink({
   children,
   href,
