@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "@fontsource/m-plus-1/index.css";
+import "@fontsource/m-plus-1/400.css";
+import "@fontsource/m-plus-1/500.css";
+import "@fontsource/m-plus-1/700.css";
 import "@smngs/ui/tokens.css";
 import "@smngs/ui/styles.css";
 import "./app.css";
