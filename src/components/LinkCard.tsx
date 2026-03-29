@@ -43,12 +43,14 @@ export const LinkCard = React.forwardRef<HTMLAnchorElement, LinkCardProps>(
           </div>
         </div>
         {image && (
-          <img
-            src={image}
-            alt=""
-            className="smngs-link-card-image"
-            aria-hidden="true"
-          />
+          <div className="smngs-link-card-image-wrap">
+            <img
+              src={image}
+              alt=""
+              className="smngs-link-card-image"
+              aria-hidden="true"
+            />
+          </div>
         )}
       </a>
     );

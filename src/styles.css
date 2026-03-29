@@ -908,13 +908,20 @@ li:last-child { margin-bottom: 0; }
   object-fit: contain;
   border-radius: 2px;
 }
-.smngs-link-card-image {
+.smngs-link-card-image-wrap {
   width: 12rem;
   flex-shrink: 0;
+  overflow: hidden;
+  align-self: stretch;
+}
+.smngs-link-card-image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  display: block;
 }
 @media (max-width: 600px) {
-  .smngs-link-card-image { width: 8rem; }
+  .smngs-link-card-image-wrap { width: 8rem; }
 }
 
 /* ===== AspectRatio ===== */
