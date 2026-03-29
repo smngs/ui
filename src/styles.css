@@ -105,10 +105,6 @@ li:last-child { margin-bottom: 0; }
 }
 
 
-/* ===== Badge size variants ===== */
-.smngs-badge-sm { padding: 0.3em 0.55em; font-size: var(--text-xs); }
-.smngs-badge-lg { padding: 0.55em 1em;   font-size: var(--text-base); }
-
 /* ===== Badge ===== */
 .smngs-badge {
   display: inline-flex;
@@ -131,6 +127,9 @@ li:last-child { margin-bottom: 0; }
 .smngs-badge[href]:hover {
   background-color: var(--color-badge-hover);
 }
+/* ===== Badge size variants ===== */
+.smngs-badge-sm { padding: 0.3em 0.55em; font-size: var(--text-xs); }
+.smngs-badge-lg { padding: 0.55em 1em;   font-size: var(--text-base); }
 
 /* ===== Avatar ===== */
 .smngs-avatar {
