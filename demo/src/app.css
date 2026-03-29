@@ -93,18 +93,28 @@ p { margin-top: 0; margin-bottom: var(--space-2); }
   gap: var(--space-1);
 }
 
-.nav-title {
-  color: var(--color-white);
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
   text-decoration: none;
-  font-size: var(--text-sm);
-  font-weight: var(--font-bold);
   padding: 0.3em 0.7em;
   border-radius: var(--radius-sm);
   transition: background-color var(--ease-fast);
 }
 
-.nav-title:hover {
+.nav-brand:hover {
   background-color: rgba(255, 255, 255, 0.2);
+}
+
+.nav-title {
+  color: var(--color-white);
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+}
+
+.nav-links a.active {
+  background-color: rgba(255, 255, 255, 0.25);
 }
 
 .theme-toggle {
@@ -180,6 +190,7 @@ p { margin-top: 0; margin-bottom: var(--space-2); }
 }
 
 .section { margin-bottom: var(--space-5); scroll-margin-top: 6rem; }
+.section:has(> :only-child:is(h1, h2, h3, h4)) { margin-bottom: var(--space-2); }
 
 .section-label {
   font-size: var(--text-xs);
@@ -190,8 +201,8 @@ p { margin-top: 0; margin-bottom: var(--space-2); }
   margin-bottom: var(--space-1);
 }
 
-.section h1::before,
-.section h2::before {
+.section > h1::before,
+.section > h2::before {
   content: "";
   display: inline-block;
   width: 0.2em;
@@ -204,7 +215,7 @@ p { margin-top: 0; margin-bottom: var(--space-2); }
   top: -0.1em;
 }
 
-.section h2 {
+.section > h2 {
   margin-bottom: var(--space-3);
 }
 
@@ -693,3 +704,134 @@ pre, img, table {
   margin: var(--space-2) 0;
 }
 .wysiwyg-preview pre code { background: none; padding: 0; }
+
+/* ===== Components Overview ===== */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(22rem, 100%), 1fr));
+  gap: var(--space-3);
+}
+.overview-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.overview-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 2px solid;
+  background: var(--color-bg);
+}
+.overview-card-name {
+  font-weight: var(--font-bold);
+  font-size: var(--text-base);
+  color: var(--color-text);
+}
+.overview-card-count {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  line-height: 1;
+}
+.overview-card-list {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em 1.2em;
+}
+.overview-card-list li {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+/* ===== Design Tokens ===== */
+.tokens-token {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-brand);
+  background: var(--color-bg-code);
+  padding: 0.1em 0.5em;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+.tokens-value {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+.tokens-px {
+  color: var(--color-subtle);
+}
+
+/* Spacing */
+.tokens-spacing {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.tokens-spacing-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.tokens-spacing-bar-wrap {
+  width: 6rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.tokens-spacing-bar {
+  background: var(--color-brand);
+  border-radius: var(--radius-sm);
+  min-width: 4px;
+  min-height: 4px;
+}
+
+/* Border Radius */
+.tokens-radius-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+.tokens-radius-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+.tokens-radius-box {
+  width: 6rem;
+  height: 6rem;
+  background: var(--color-bg-code);
+  border: 2px solid var(--color-brand);
+}
+
+/* Type Scale */
+.tokens-type {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.tokens-type-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.tokens-type-sample {
+  width: 8rem;
+  font-weight: var(--font-bold);
+  color: var(--color-text);
+  line-height: 1;
+  text-align: right;
+  flex-shrink: 0;
+}
+.tokens-type-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
