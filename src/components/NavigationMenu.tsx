@@ -13,7 +13,6 @@ export function NavigationMenu({
       <NavigationMenuPrimitive.List className="smngs-nav-menu-list">
         {children}
       </NavigationMenuPrimitive.List>
-      <NavigationMenuPrimitive.Viewport className="smngs-nav-menu-viewport" />
     </NavigationMenuPrimitive.Root>
   );
 }
