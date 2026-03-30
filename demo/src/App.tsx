@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { HashRouter, Routes, Route, Link, NavLink } from "react-router-dom";
+import { HashRouter, Routes, Route, Link, NavLink, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon, faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { Avatar, ToastProvider, ToastViewport } from "@smngs/ui";
-import { Toc } from "./Toc";
+import { Avatar, ToastProvider, ToastViewport, Toc } from "@smngs/ui";
 import { HomePage } from "./pages/HomePage";
 import { ComponentsPage } from "./pages/ComponentsPage";
 import { DemoPage } from "./pages/DemoPage";
@@ -13,10 +12,11 @@ function AppContent({ isDark, setIsDark }: {
   setIsDark: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <div className="layout">
-      <Toc />
+      <Toc container=".page" refreshKey={location.pathname} />
       <div className="page">
         <div className="nav-spacer" aria-hidden="true" />
         <nav className="site-nav">
