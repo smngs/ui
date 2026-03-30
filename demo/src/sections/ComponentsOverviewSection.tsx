@@ -6,7 +6,7 @@ const CATEGORIES = [
   {
     name: "Display",
     color: "var(--color-brand)",
-    components: ["Avatar", "Badge", "Blockquote", "Button", "Card", "Separator", "Tooltip", "LinkCard", "Toggle", "ToggleGroup", "ArticleCard", "ArticleHero", "ArticleListCard"],
+    components: ["Avatar", "Badge", "Blockquote", "Button", "Card", "Separator", "Table", "Tooltip", "LinkCard", "Toggle", "ToggleGroup", "ArticleCard", "ArticleHero", "ArticleListCard"],
   },
   {
     name: "Overlay",

@@ -1,4 +1,7 @@
-import { Separator } from "@smngs/ui";
+import {
+  Separator,
+  Table, TableHeader, TableBody, TableRow, TableHead, TableCell,
+} from "@smngs/ui";
 import { Section } from "../Section";
 
 const SPACING = [
@@ -16,12 +19,12 @@ const RADIUS = [
 ];
 
 const TYPE_SCALE = [
-  { token: "--text-xs",   value: "1.2rem", label: "Xs — Label / Tag" },
-  { token: "--text-sm",   value: "1.4rem", label: "Sm — Caption / Secondary" },
-  { token: "--text-base", value: "1.6rem", label: "Base — Body text" },
-  { token: "--text-lg",   value: "1.8rem", label: "Lg — Subtitle / Card title" },
-  { token: "--text-xl",   value: "2.4rem", label: "Xl — Section heading" },
-  { token: "--text-2xl",  value: "3.6rem", label: "2Xl — Page heading" },
+  { token: "--text-xs",   value: "1.2rem", label: "Label / Tag" },
+  { token: "--text-sm",   value: "1.4rem", label: "Caption / Secondary" },
+  { token: "--text-base", value: "1.6rem", label: "Body text" },
+  { token: "--text-lg",   value: "1.8rem", label: "Subtitle / Card title" },
+  { token: "--text-xl",   value: "2.4rem", label: "Section heading" },
+  { token: "--text-2xl",  value: "3.6rem", label: "Page heading" },
 ];
 
 export function DesignTokensSection() {
@@ -31,17 +34,26 @@ export function DesignTokensSection() {
 
         {/* Spacing */}
         <div className="section-label" style={{ marginBottom: "var(--space-2)" }}>Spacing</div>
-        <div className="tokens-spacing">
-          {SPACING.map(({ token, value, px }) => (
-            <div key={token} className="tokens-spacing-row">
-              <div className="tokens-spacing-bar-wrap">
-                <div className="tokens-spacing-bar" style={{ width: `var(${token})`, height: `var(${token})` }} />
-              </div>
-              <code className="tokens-token">{token}</code>
-              <span className="tokens-value">{value} <span className="tokens-px">({px})</span></span>
-            </div>
-          ))}
-        </div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Token</TableHead>
+              <TableHead>Value</TableHead>
+              <TableHead>Preview</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {SPACING.map(({ token, value, px }) => (
+              <TableRow key={token}>
+                <TableCell><code className="tokens-token">{token}</code></TableCell>
+                <TableCell><span className="tokens-value">{value} <span className="tokens-px">({px})</span></span></TableCell>
+                <TableCell>
+                  <div className="tokens-spacing-bar" style={{ width: `var(${token})`, height: `var(${token})` }} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
 
         {/* Border Radius */}
         <div className="section-label" style={{ margin: "var(--space-4) 0 var(--space-2)" }}>Border Radius</div>
@@ -57,17 +69,26 @@ export function DesignTokensSection() {
 
         {/* Type Scale */}
         <div className="section-label" style={{ margin: "var(--space-4) 0 var(--space-2)" }}>Type Scale</div>
-        <div className="tokens-type">
-          {TYPE_SCALE.map(({ token, value, label }) => (
-            <div key={token} className="tokens-type-row">
-              <span className="tokens-type-sample" style={{ fontSize: `var(${token})` }}>Ag</span>
-              <div className="tokens-type-info">
-                <code className="tokens-token">{token}</code>
-                <span className="tokens-value">{value} — {label}</span>
-              </div>
-            </div>
-          ))}
-        </div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Sample</TableHead>
+              <TableHead>Token</TableHead>
+              <TableHead>Description</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {TYPE_SCALE.map(({ token, value, label }) => (
+              <TableRow key={token}>
+                <TableCell>
+                  <span style={{ fontSize: `var(${token})`, fontWeight: "var(--font-bold)", lineHeight: 1 }}>Ag</span>
+                </TableCell>
+                <TableCell><code className="tokens-token">{token}</code></TableCell>
+                <TableCell><span className="tokens-value">{value} — {label}</span></TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
 
       </Section>
       <Separator />
