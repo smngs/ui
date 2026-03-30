@@ -7,7 +7,9 @@ function collectItems(container: string): TocItem[] {
     document.querySelectorAll<HTMLElement>(`${container} [id]`)
   )
     .map((el) => {
-      const heading = el.querySelector<HTMLElement>("h1, h2, h3");
+      // Support both: headings with id (e.g. rehype-slug) and wrapper divs with id containing a heading
+      const isHeading = /^H[1-3]$/.test(el.tagName);
+      const heading = isHeading ? el : el.querySelector<HTMLElement>("h1, h2, h3");
       if (!heading) return null;
       return {
         id: el.id,
