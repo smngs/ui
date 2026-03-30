@@ -6,6 +6,7 @@ export { Card, CardHeader, CardBody } from "./components/display/Card";
 export { ArticleCard } from "./components/display/ArticleCard";
 export { ArticleHero } from "./components/display/ArticleHero";
 export { ArticleListCard } from "./components/display/ArticleListCard";
+export { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "./components/display/Table";
 export { Separator } from "./components/display/Separator";
 export { Tooltip } from "./components/display/Tooltip";
 
