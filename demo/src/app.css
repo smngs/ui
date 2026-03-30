@@ -118,9 +118,6 @@ p { margin-top: 0; margin-bottom: var(--space-2); }
 }
 
 .theme-toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.4em;
   background: rgba(255, 255, 255, 0.2);
   border: none;
   border-radius: var(--radius-sm);
@@ -129,8 +126,8 @@ p { margin-top: 0; margin-bottom: var(--space-2); }
   font-size: var(--text-sm);
   font-family: inherit;
   font-weight: var(--font-medium);
-  padding: 0.45em 0.55em;
-  line-height: 1;
+  padding: 0.3em 0.7em;
+  line-height: inherit;
   transition: background-color var(--ease-fast);
 }
 
@@ -140,7 +137,6 @@ p { margin-top: 0; margin-bottom: var(--space-2); }
 
 .hamburger {
   display: none;
-  align-items: center;
   background: rgba(255, 255, 255, 0.2);
   border: none;
   border-radius: var(--radius-sm);
@@ -148,8 +144,8 @@ p { margin-top: 0; margin-bottom: var(--space-2); }
   cursor: pointer;
   font-size: var(--text-sm);
   font-family: inherit;
-  padding: 0.45em 0.55em;
-  line-height: 1;
+  padding: 0.3em 0.7em;
+  line-height: inherit;
   transition: background-color var(--ease-fast);
 }
 
@@ -351,17 +347,19 @@ pre, img, table {
   }
 
   .hamburger {
-    display: flex;
+    display: block;
   }
 
   .site-nav {
     padding: 1rem var(--space-2);
   }
 
+  .nav-brand,
   .theme-toggle,
   .hamburger {
     font-size: var(--text-base);
-    padding: 0.5em 0.6em;
+    padding: 0.3em 0.7em;
+    line-height: inherit;
   }
 
   .token-grid {
@@ -766,23 +764,7 @@ pre, img, table {
   color: var(--color-subtle);
 }
 
-/* Spacing */
-.tokens-spacing {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-.tokens-spacing-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-.tokens-spacing-bar-wrap {
-  width: 6rem;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-}
+/* Spacing bar (used inside Table) */
 .tokens-spacing-bar {
   background: var(--color-brand);
   border-radius: var(--radius-sm);
@@ -810,28 +792,3 @@ pre, img, table {
   border: 2px solid var(--color-brand);
 }
 
-/* Type Scale */
-.tokens-type {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-.tokens-type-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-.tokens-type-sample {
-  width: 8rem;
-  font-weight: var(--font-bold);
-  color: var(--color-text);
-  line-height: 1;
-  text-align: right;
-  flex-shrink: 0;
-}
-.tokens-type-info {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  flex-wrap: wrap;
-}

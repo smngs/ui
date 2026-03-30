@@ -10,6 +10,7 @@ import {
   Card, CardBody, CardHeader,
   LinkCard,
   Separator,
+  Table, TableHeader, TableBody, TableRow, TableHead, TableCell,
   Toggle,
   ToggleGroup, ToggleGroupItem,
   Tooltip,
@@ -362,6 +363,44 @@ export function DisplaySection({ isDark }: { isDark: boolean }) {
 <Tooltip content="Helpful hint" side="top">
   <Button variant="ghost">Hover me</Button>
 </Tooltip>
+        `} />
+      </Section>
+
+      <Separator />
+
+      {/* Table */}
+      <Section title="Table" id="table" level={3}>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Status</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow><TableCell>Alice Johnson</TableCell><TableCell>Engineer</TableCell><TableCell>Active</TableCell></TableRow>
+            <TableRow><TableCell>Bob Smith</TableCell><TableCell>Designer</TableCell><TableCell>Away</TableCell></TableRow>
+            <TableRow><TableCell>Carol Lee</TableCell><TableCell>PM</TableCell><TableCell>Active</TableCell></TableRow>
+          </TableBody>
+        </Table>
+        <CodeBlock isDark={isDark} code={`
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Role</TableHead>
+      <TableHead>Status</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Alice Johnson</TableCell>
+      <TableCell>Engineer</TableCell>
+      <TableCell>Active</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
         `} />
       </Section>
 
