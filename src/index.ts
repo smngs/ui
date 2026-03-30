@@ -101,3 +101,5 @@ export {
   MenubarSubTrigger,
   MenubarSubContent,
 } from "./components/navigation/Menubar";
+export { Toc } from "./components/navigation/Toc";
+export type { TocItem, TocProps } from "./components/navigation/Toc";
