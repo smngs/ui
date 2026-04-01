@@ -7,6 +7,7 @@ import {
   Badge,
   Blockquote,
   Button,
+  Calendar,
   Card, CardBody, CardHeader,
   LinkCard,
   Separator,
@@ -224,6 +225,34 @@ export function DisplaySection({ isDark }: { isDark: boolean }) {
   category="Engineering"
   tags={["React", "Next.js"]}
   date="2026-03-30"
+/>
+        `} />
+      </Section>
+
+      <Separator />
+
+      {/* Calendar */}
+      <Section title="Calendar" id="calendar" level={3}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(32rem, 100%), 1fr))", gap: "var(--space-3)" }}>
+          <Calendar
+            dates={["2026-03-05", "2026-03-12", "2026-03-19", "2026-03-26", "2026-04-02"]}
+            defaultMonth="2026-03"
+            onDateClick={(date) => alert(`Clicked: ${date}`)}
+          />
+          <Calendar
+            dates={["2026-04-01", "2026-04-08", "2026-04-15"]}
+          />
+        </div>
+        <CodeBlock isDark={isDark} code={`
+<Calendar
+  dates={["2026-03-05", "2026-03-12", "2026-03-19", "2026-03-26"]}
+  defaultMonth="2026-03"
+  onDateClick={(date) => console.log(date)}
+/>
+
+{/* No defaultMonth — shows current month */}
+<Calendar
+  dates={["2026-04-01", "2026-04-08", "2026-04-15"]}
 />
         `} />
       </Section>
