@@ -8,6 +8,7 @@ export { ArticleHero } from "./components/display/ArticleHero";
 export { ArticleListCard } from "./components/display/ArticleListCard";
 export { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "./components/display/Table";
 export { Separator } from "./components/display/Separator";
+export { Calendar } from "./components/display/Calendar";
 export { Tooltip } from "./components/display/Tooltip";
 
 export { Dialog, DialogTrigger, DialogContent, DialogClose } from "./components/overlay/Dialog";
