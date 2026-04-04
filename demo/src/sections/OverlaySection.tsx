@@ -4,6 +4,7 @@ import {
   Button,
   ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger,
   Dialog, DialogClose, DialogContent, DialogTrigger,
+  Drawer, DrawerTrigger, DrawerContent, DrawerClose,
   HoverCard, HoverCardContent, HoverCardTrigger,
   Popover, PopoverContent, PopoverTrigger,
   Separator,
@@ -112,6 +113,51 @@ export function OverlaySection({ isDark }: { isDark: boolean }) {
   <HoverCardTrigger asChild><Button variant="ghost">Hover me</Button></HoverCardTrigger>
   <HoverCardContent>Card shown on hover.</HoverCardContent>
 </HoverCard>
+        `} />
+      </Section>
+
+      <Separator />
+
+      {/* Drawer */}
+      <Section title="Drawer" id="drawer" level={3}>
+        <div className="row">
+          <Drawer>
+            <DrawerTrigger asChild>
+              <Button variant="primary">Open Drawer (Right)</Button>
+            </DrawerTrigger>
+            <DrawerContent title="Settings" description="Manage your preferences.">
+              <p style={{ fontSize: "var(--text-sm)", color: "var(--color-muted)" }}>
+                Drawer content goes here. It slides in from the side.
+              </p>
+              <DrawerClose asChild>
+                <Button variant="ghost" style={{ marginTop: "var(--space-4)", alignSelf: "flex-start" }}>Close</Button>
+              </DrawerClose>
+            </DrawerContent>
+          </Drawer>
+
+          <Drawer>
+            <DrawerTrigger asChild>
+              <Button variant="ghost">Open Drawer (Left)</Button>
+            </DrawerTrigger>
+            <DrawerContent title="Navigation" side="left">
+              <nav style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", fontSize: "var(--text-sm)" }}>
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+              </nav>
+            </DrawerContent>
+          </Drawer>
+        </div>
+        <CodeBlock isDark={isDark} code={`
+<Drawer>
+  <DrawerTrigger asChild><Button>Open</Button></DrawerTrigger>
+  <DrawerContent title="Settings" description="Manage your preferences.">
+    <p>Drawer content goes here.</p>
+    <DrawerClose asChild><Button variant="ghost">Close</Button></DrawerClose>
+  </DrawerContent>
+</Drawer>
+
+{/* side: "left" | "right" (default: "right") */}
         `} />
       </Section>
 
