@@ -609,14 +609,7 @@ a.smngs-article-list-card:hover .smngs-article-list-card-image {
   border-radius: var(--radius-full);
   padding: 0.25em 0.8em;
 }
-@media (max-width: 768px) {
-  .smngs-article-hero-body {
-    padding: var(--space-5);
-  }
-  .smngs-article-hero-title {
-    font-size: var(--text-xl);
-  }
-}
+/* ArticleHero mobile overrides are in the unified mobile block at the bottom */
 
 /* ===== Tooltip ===== */
 .smngs-tooltip-content {
@@ -2405,13 +2398,25 @@ a.smngs-article-list-card:hover .smngs-article-list-card-image {
   /* Progress */
   .smngs-progress { height: 0.25rem; }
 
-  /* ArticleCard — compact for mobile */
+  /* Cards — unified compact mobile style */
   .smngs-article-card-body { padding: var(--space-3); gap: var(--space-2); }
   .smngs-article-card-title { font-size: var(--text-sm); }
   .smngs-article-card-compact .smngs-article-card-body { padding: var(--space-2) var(--space-3); }
   .smngs-article-card-compact .smngs-article-card-title { font-size: var(--text-xs); }
 
-  /* ArticleListCard — compact for mobile */
   .smngs-article-list-card-body { padding: var(--space-3); gap: var(--space-2); }
   .smngs-article-list-card-title { font-size: var(--text-sm); }
+
+  .smngs-article-hero-body { padding: var(--space-3) var(--space-4); gap: var(--space-2); }
+  .smngs-article-hero-title { font-size: var(--text-lg); }
+  .smngs-article-hero-description { font-size: var(--text-sm); }
+  .smngs-article-hero-category,
+  .smngs-article-hero-date { font-size: var(--text-xs); }
+  .smngs-article-hero-tag { font-size: var(--text-xs); padding: 0.2em 0.6em; }
+
+  .smngs-link-card { min-height: 3rem; }
+  .smngs-link-card-body { padding: var(--space-3); gap: var(--space-1); }
+  .smngs-link-card-title { font-size: var(--text-sm); }
+  .smngs-link-card-description { font-size: var(--text-xs); }
+  .smngs-link-card-domain { font-size: 0.5625rem; }
 }
