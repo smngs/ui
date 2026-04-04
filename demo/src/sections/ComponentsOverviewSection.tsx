@@ -6,12 +6,12 @@ const CATEGORIES = [
   {
     name: "Display",
     color: "var(--color-brand)",
-    components: ["Avatar", "Badge", "Blockquote", "Button", "Card", "Separator", "Table", "Tooltip", "LinkCard", "Toggle", "ToggleGroup", "ArticleCard", "ArticleHero", "ArticleListCard"],
+    components: ["Avatar", "Badge", "Blockquote", "Button", "Card", "Kbd", "Separator", "Table", "Tooltip", "LinkCard", "Toggle", "ToggleGroup", "ArticleCard", "ArticleHero", "ArticleListCard"],
   },
   {
     name: "Overlay",
     color: "var(--color-info)",
-    components: ["Dialog", "AlertDialog", "Popover", "HoverCard", "ContextMenu"],
+    components: ["Dialog", "AlertDialog", "Drawer", "Popover", "HoverCard", "ContextMenu"],
   },
   {
     name: "Navigation",
@@ -26,7 +26,7 @@ const CATEGORIES = [
   {
     name: "Feedback",
     color: "var(--color-warning)",
-    components: ["Toast", "Progress"],
+    components: ["Toast", "Progress", "Skeleton"],
   },
   {
     name: "Layout",
@@ -41,7 +41,7 @@ export function ComponentsOverviewSection() {
   return (
     <>
       <Section title="Components" id="components-overview" level={1}>
-        <p style={{ color: "var(--color-muted)", margin: "0 0 var(--space-3)", fontSize: "var(--text-base)" }}>
+        <p style={{ color: "var(--color-muted)", margin: "0 0 var(--space-5)", fontSize: "var(--text-base)" }}>
           {total} components across {CATEGORIES.length} categories.{" "}
           <NavLink to="/components" style={{ color: "var(--color-brand)" }}>View all →</NavLink>
         </p>

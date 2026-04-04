@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Progress, Separator, Toast } from "@smngs/ui";
+import { Button, Progress, Separator, Skeleton, Toast } from "@smngs/ui";
 import { Section } from "../Section";
 import { CodeBlock } from "../CodeBlock";
 
@@ -53,6 +53,28 @@ export function FeedbackSection({ isDark }: { isDark: boolean }) {
           <Progress value={90} />
         </div>
         <CodeBlock isDark={isDark} code={`<Progress value={65} />`} />
+      </Section>
+
+      {/* Skeleton */}
+      <Section title="Skeleton" id="skeleton" level={3}>
+        <div style={{ display: "flex", gap: "var(--space-3)", alignItems: "flex-start", maxWidth: "48rem" }}>
+          <Skeleton variant="circle" width="4.8rem" height="4.8rem" />
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+            <Skeleton variant="text" width="40%" height="1.4rem" />
+            <Skeleton variant="text" width="100%" height="1rem" />
+            <Skeleton variant="text" width="80%" height="1rem" />
+          </div>
+        </div>
+        <div style={{ marginTop: "var(--space-4)" }}>
+          <Skeleton width="100%" height="12rem" />
+        </div>
+        <CodeBlock isDark={isDark} code={`
+<Skeleton variant="circle" width="4.8rem" height="4.8rem" />
+<Skeleton variant="text" width="40%" height="1.4rem" />
+<Skeleton width="100%" height="12rem" />
+
+{/* variant: "rect" (default) | "text" | "circle" */}
+        `} />
       </Section>
 
       <Separator />
