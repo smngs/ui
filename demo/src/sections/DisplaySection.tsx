@@ -9,6 +9,7 @@ import {
   Button,
   Calendar,
   Card, CardBody, CardHeader,
+  Kbd,
   LinkCard,
   Separator,
   Table, TableHeader, TableBody, TableRow, TableHead, TableCell,
@@ -512,6 +513,26 @@ import { faBold, faItalic, faUnderline, faAlignLeft, faAlignCenter, faAlignRight
 </ToggleGroup>
 
 {/* variant: "default" | "outline", size: "sm" | "md" | "lg" */}
+        `} />
+      </Section>
+
+      <Separator />
+
+      {/* Kbd */}
+      <Section title="Kbd" id="kbd" level={3}>
+        <p style={{ fontSize: "var(--text-sm)", color: "var(--color-muted)" }}>
+          Press <Kbd>⌘</Kbd><Kbd>S</Kbd> to save, or <Kbd>Esc</Kbd> to cancel.
+        </p>
+        <div className="row">
+          <span><Kbd>⌘</Kbd><Kbd>K</Kbd></span>
+          <span><Kbd>Ctrl</Kbd><Kbd>Shift</Kbd><Kbd>P</Kbd></span>
+          <span><Kbd>⌥</Kbd><Kbd>Enter</Kbd></span>
+        </div>
+        <CodeBlock isDark={isDark} code={`
+<p>Press <Kbd>⌘</Kbd><Kbd>S</Kbd> to save, or <Kbd>Esc</Kbd> to cancel.</p>
+
+<Kbd>⌘</Kbd><Kbd>K</Kbd>
+<Kbd>Ctrl</Kbd><Kbd>Shift</Kbd><Kbd>P</Kbd>
         `} />
       </Section>
 

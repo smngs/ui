@@ -15,6 +15,7 @@ export { Dialog, DialogTrigger, DialogContent, DialogClose } from "./components/
 export { AlertDialog, AlertDialogTrigger, AlertDialogContent } from "./components/overlay/AlertDialog";
 export { Popover, PopoverTrigger, PopoverContent, PopoverClose } from "./components/overlay/Popover";
 export { HoverCard, HoverCardTrigger, HoverCardContent } from "./components/overlay/HoverCard";
+export { Drawer, DrawerTrigger, DrawerContent, DrawerClose } from "./components/overlay/Drawer";
 export {
   ContextMenu,
   ContextMenuTrigger,
@@ -65,6 +66,7 @@ export {
 
 export { ToastProvider, Toast, ToastViewport } from "./components/feedback/Toast";
 export { Progress } from "./components/feedback/Progress";
+export { Skeleton } from "./components/feedback/Skeleton";
 export { ScrollArea } from "./components/layout/ScrollArea";
 export { AspectRatio } from "./components/layout/AspectRatio";
 export { Grid, GridItem } from "./components/layout/Grid";
@@ -78,6 +80,7 @@ export {
   ToolbarSpacer,
 } from "./components/layout/Toolbar";
 export { LinkCard } from "./components/display/LinkCard";
+export { Kbd } from "./components/display/Kbd";
 export { Toggle } from "./components/display/Toggle";
 export { ToggleGroup, ToggleGroupItem } from "./components/display/ToggleGroup";
 export {

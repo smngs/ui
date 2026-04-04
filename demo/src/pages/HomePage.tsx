@@ -14,7 +14,7 @@ export function HomePage({ isDark }: { isDark: boolean }) {
       <div className="hero">
         <div className="hero-text">
           <h1>@smngs/ui</h1>
-          <p>A Radix UI-based design system — 33 components</p>
+          <p>A Radix UI-based design system — 36 components</p>
           <div className="row">
             <Badge asChild><a href="https://radix-ui.com" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faCube} /> Radix UI</a></Badge>
             <Badge asChild><a href="https://www.typescriptlang.org" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faTypescript} /> TypeScript</a></Badge>
