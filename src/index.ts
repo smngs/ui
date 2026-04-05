@@ -90,6 +90,7 @@ export {
   NavbarRight,
   NavbarHamburger,
   NavbarMobileMenu,
+  NavbarThemeToggle,
   NavbarDropdownContent,
   useNavbarContext,
 } from "./components/navigation/Navbar";
