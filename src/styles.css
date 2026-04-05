@@ -211,7 +211,6 @@ pre, img, table { max-width: 100%; }
 .smngs-btn-ghost:hover {
   background-color: var(--color-bg);
   border-color: var(--color-brand);
-  color: var(--color-brand);
 }
 
 /* ===== Button size variants ===== */
@@ -929,9 +928,11 @@ a.smngs-article-list-card:hover .smngs-article-list-card-image {
   align-items: center;
   gap: var(--space-2);
 }
-.smngs-btn-nav {
+.smngs-btn-nav,
+.smngs-btn-nav:hover {
   background: transparent;
   color: var(--color-white);
+  text-decoration: none;
 }
 .smngs-btn-nav:hover {
   background: rgba(255, 255, 255, 0.15);
@@ -943,9 +944,11 @@ a.smngs-article-list-card:hover .smngs-article-list-card-image {
   background: rgba(255, 255, 255, 0.2);
   box-shadow: none;
 }
-.smngs-btn-nav-active {
+.smngs-btn-nav-active,
+.smngs-btn-nav-active:hover {
   background: rgba(255, 255, 255, 0.2);
   color: var(--color-white);
+  text-decoration: none;
 }
 .smngs-btn-nav-active:hover {
   background: rgba(255, 255, 255, 0.28);
@@ -962,18 +965,37 @@ a.smngs-article-list-card:hover .smngs-article-list-card-image {
 .smngs-navbar-hamburger {
   display: none;
   align-items: center;
-  background: rgba(255, 255, 255, 0.15);
+  background: transparent;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   color: var(--color-white);
   cursor: pointer;
   font-size: var(--text-sm);
-  padding: 0.45em 0.55em;
+  padding: 0.6em 0.8em;
   line-height: 1;
   transition: background-color var(--ease-fast);
 }
 .smngs-navbar-hamburger:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Theme toggle button */
+.smngs-navbar-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--color-white);
+  cursor: pointer;
+  font-size: var(--text-sm);
+  padding: 0.6em 0.8em;
+  line-height: 1;
+  transition: background-color var(--ease-fast);
+}
+.smngs-navbar-theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* Mobile menu (shown below navbar when open) */
@@ -1015,7 +1037,7 @@ a.smngs-article-list-card:hover .smngs-article-list-card-image {
   .smngs-navbar-hamburger {
     display: flex;
     font-size: var(--text-sm);
-    padding: 0.4em 0.5em;
+    padding: 0.6em 0.8em;
   }
   .smngs-navbar-mobile-menu a {
     font-size: var(--text-xs);
