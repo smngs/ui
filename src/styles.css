@@ -108,11 +108,15 @@ blockquote {
   border-left: 3px solid var(--color-brand);
   background-color: var(--color-brand-subtle);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  margin: 0 0 var(--space-4);
-  padding: var(--space-3) var(--space-5);
+  margin: 0 0 var(--space-3);
+  padding: var(--space-3) var(--space-4);
   color: var(--color-muted);
   font-style: italic;
-  line-height: var(--leading-loose);
+  line-height: var(--leading-relaxed);
+}
+blockquote > *:last-child,
+pre > *:last-child {
+  margin-bottom: 0;
 }
 .smngs-blockquote-info    { border-left-color: var(--color-info);    background-color: rgba(74, 127, 212, 0.08); }
 .smngs-blockquote-success { border-left-color: var(--color-success); background-color: rgba(52, 201, 143, 0.08); }
