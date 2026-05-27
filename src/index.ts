@@ -88,6 +88,7 @@ export {
   NavbarHamburger,
   NavbarMobileMenu,
   NavbarDropdownContent,
+  NavbarThemeToggle,
   useNavbarContext,
 } from "./components/navigation/Navbar";
 export {
