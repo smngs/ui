@@ -18,7 +18,6 @@ function AppContent({ isDark, setIsDark }: {
     <div className="layout">
       <Toc container=".page" refreshKey={location.pathname} />
       <div className="page">
-        <div className="nav-spacer" aria-hidden="true" />
         <nav className="site-nav">
           <Link to="/" className="nav-brand" onClick={() => setMenuOpen(false)}>
             <Avatar src="https://github.com/smngs.png" fallback="SM" size="sm" />
