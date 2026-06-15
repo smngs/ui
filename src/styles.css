@@ -310,7 +310,7 @@ pre, img, table { max-width: 100%; }
 /* ===== Card ===== */
 .smngs-card {
   background-color: var(--color-surface);
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   border: 1px solid var(--color-divider);
   overflow: hidden;
   box-shadow: var(--shadow-xs);
@@ -335,7 +335,7 @@ pre, img, table { max-width: 100%; }
   display: flex;
   flex-direction: column;
   background-color: var(--color-surface);
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   border: 1px solid var(--color-divider);
   overflow: hidden;
   text-decoration: none;
@@ -344,7 +344,6 @@ pre, img, table { max-width: 100%; }
   transition: border-color var(--ease-normal), box-shadow var(--ease-normal);
 }
 a.smngs-article-card:hover {
-  border-color: var(--color-brand);
   box-shadow: var(--shadow-md);
 }
 .smngs-article-card-image-wrap {
@@ -412,7 +411,7 @@ a.smngs-article-card:hover .smngs-article-card-image {
   display: flex;
   flex-direction: row;
   background-color: var(--color-surface);
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   border: 1px solid var(--color-divider);
   overflow: hidden;
   text-decoration: none;
@@ -422,7 +421,6 @@ a.smngs-article-card:hover .smngs-article-card-image {
   width: 100%;
 }
 a.smngs-article-list-card:hover {
-  border-color: var(--color-brand);
   box-shadow: var(--shadow-md);
 }
 .smngs-article-list-card-image-wrap {
@@ -544,7 +542,7 @@ a.smngs-article-list-card:hover .smngs-article-list-card-image {
   display: flex;
   flex-direction: column;
   background-color: var(--color-surface);
-  border-radius: var(--radius-xl);
+  border-radius: 0;
   border: 1px solid var(--color-divider);
   overflow: hidden;
   width: 100%;
@@ -565,8 +563,8 @@ a.smngs-article-list-card:hover .smngs-article-list-card-image {
 .smngs-article-hero-body {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  padding: var(--space-6) var(--space-7);
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
 }
 .smngs-article-hero-meta {
   display: flex;
@@ -586,11 +584,17 @@ a.smngs-article-list-card:hover .smngs-article-list-card-image {
 }
 .smngs-article-hero-title {
   margin: 0;
-  font-size: var(--text-3xl);
+  font-size: var(--text-2xl);
   font-weight: var(--font-bold);
   color: var(--color-text);
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-tighter);
+}
+/* The hero sits in a padded card, so the global h1/h2 accent bar would not
+   line up with the content headings' bars. Drop it on the hero title so the
+   bar appears only on in-article headings. */
+.smngs-article-hero-title::before {
+  content: none;
 }
 .smngs-article-hero-description {
   margin: 0;
@@ -904,7 +908,7 @@ a.smngs-article-list-card:hover .smngs-article-list-card-image {
   gap: var(--space-3);
   max-width: var(--smngs-navbar-max-width, 100%);
   margin: 0 auto;
-  padding: var(--space-3) var(--space-5);
+  padding: var(--space-4) var(--space-5);
 }
 .smngs-navbar-title {
   color: var(--color-white);
