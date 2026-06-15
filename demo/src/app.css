@@ -1,4 +1,10 @@
-.page { max-width: 50rem; margin: 0 auto; padding: var(--space-6); }
+:root {
+  /* Content width of the full-width nav brand bar. */
+  --bar-max-w: 50rem;
+  --nav-height: 4rem;
+}
+
+.page { max-width: 50rem; margin: 0 auto; padding: 0 var(--space-6) var(--space-6); }
 
 .hero {
   background-color: var(--color-brand);
@@ -50,19 +56,21 @@
   border-color: rgba(255, 255, 255, 0.5);
 }
 
+/* Full-bleed brand bar pinned to the very top; symmetric padding re-centers
+   the content at --bar-max-w (the nav is nested in the centered .page column). */
 .site-nav {
   position: sticky;
-  top: var(--header-top);
+  top: 0;
   z-index: var(--z-header);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-3);
   background-color: var(--color-brand);
-  padding: var(--space-3) var(--space-5);
-  border-radius: var(--radius-lg);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
   margin-bottom: var(--space-6);
-  box-shadow: var(--shadow-md);
+  padding: var(--space-4) max(var(--space-5), calc(50vw - var(--bar-max-w) / 2));
 }
 
 .nav-links {
@@ -175,14 +183,6 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.nav-spacer {
-  position: sticky;
-  top: 0;
-  height: calc(var(--header-top) + 12px);
-  background: var(--color-bg);
-  z-index: calc(var(--z-header) - 1);
-  margin-bottom: -12px;
-}
 
 .section { margin-bottom: var(--space-7); scroll-margin-top: 6rem; }
 .section:has(> :only-child:is(h1, h2, h3, h4)) { margin-bottom: var(--space-4); }
@@ -369,9 +369,12 @@ pre, img, table {
 }
 
 /* ===== TOC (uses @smngs/ui Toc component styles) ===== */
+/* The full-bleed navbar spans all grid columns, so push the side TOC down to
+   clear it. */
 .layout .smngs-toc {
   grid-column: 1;
   justify-self: center;
+  margin-top: calc(var(--nav-height) + var(--space-5));
 }
 
 @media (max-width: 1024px) {

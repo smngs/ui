@@ -104,13 +104,17 @@
   --color-text: #e4e4e7;
   --color-muted: #a1a1aa;
   --color-subtle: #71717a;
-  --color-bg: #18181b;
+  /* #121212 with a 1% brand tint (≈ #121314). */
+  --color-bg: color-mix(in srgb, #121212 99%, var(--color-brand));
   --color-bg-code: #27272a;
   --color-badge: #52525b;
   --color-badge-hover: #71717a;
   --color-border: #3f3f46;
   --color-divider: #27272a;
-  --color-surface: #1e1e22;
+  /* Surfaces (cards, etc.): the page background lifted just slightly with
+     white so cards read a hair brighter than the page while staying neutral
+     grey (≈ #18191a), not brand-tinted. */
+  --color-surface: color-mix(in srgb, var(--color-bg), #fff 2.5%);
 
   /* Dark shadow overrides */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
