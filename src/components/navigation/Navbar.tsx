@@ -26,7 +26,9 @@ export function Navbar({
   const [mobileOpen, setMobileOpen] = useState(false);
   return (
     <NavbarContext.Provider value={{ mobileOpen, setMobileOpen }}>
-      <nav className={`smngs-navbar ${className}`.trim()}>{children}</nav>
+      <nav className={`smngs-navbar ${className}`.trim()}>
+        <div className="smngs-navbar-inner">{children}</div>
+      </nav>
     </NavbarContext.Provider>
   );
 }

@@ -374,8 +374,7 @@ a.smngs-article-card:hover .smngs-article-card-image {
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
   color: var(--color-brand);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-widest);
+  letter-spacing: var(--tracking-wide);
 }
 .smngs-article-card-title {
   margin: 0;
@@ -896,13 +895,16 @@ a.smngs-article-list-card:hover .smngs-article-list-card-image {
 
 /* ===== Navbar ===== */
 .smngs-navbar {
+  width: 100%;
+  background-color: var(--color-brand);
+}
+.smngs-navbar-inner {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  background-color: var(--color-brand);
+  max-width: var(--smngs-navbar-max-width, 100%);
+  margin: 0 auto;
   padding: var(--space-3) var(--space-5);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
 }
 .smngs-navbar-title {
   color: var(--color-white);
@@ -1022,7 +1024,7 @@ a.smngs-article-list-card:hover .smngs-article-list-card-image {
 }
 
 @media (max-width: 768px) {
-  .smngs-navbar {
+  .smngs-navbar-inner {
     flex-wrap: wrap;
     padding: var(--space-2) var(--space-3);
     gap: var(--space-2);
