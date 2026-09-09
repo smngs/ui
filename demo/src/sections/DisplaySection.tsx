@@ -31,7 +31,7 @@ export function DisplaySection({ isDark }: { isDark: boolean }) {
 
   return (
     <>
-      <div className="section" id="display">
+      <div className="smngs-section" id="display">
         <h2>Display</h2>
       </div>
 

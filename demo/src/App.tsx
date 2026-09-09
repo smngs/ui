@@ -1,55 +1,91 @@
-import React, { useState, useEffect } from "react";
 import { HashRouter, Routes, Route, Link, NavLink, useLocation } from "react-router-dom";
+import {
+  Badge,
+  Button,
+  Navbar,
+  NavbarHeader,
+  NavbarHamburger,
+  NavbarLinks,
+  NavbarMobileMenu,
+  NavbarRight,
+  NavbarThemeToggle,
+  NavbarTitle,
+  ThemeProvider,
+  ToastProvider,
+  ToastViewport,
+  Toc,
+  useTheme,
+} from "@smngs/ui";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun, faMoon, faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { Avatar, ToastProvider, ToastViewport, Toc } from "@smngs/ui";
+import { faCube } from "@fortawesome/free-solid-svg-icons";
+import { faReact, faTypescript } from "@fortawesome/free-brands-svg-icons";
 import { HomePage } from "./pages/HomePage";
 import { ComponentsPage } from "./pages/ComponentsPage";
 import { DemoPage } from "./pages/DemoPage";
 
-function AppContent({ isDark, setIsDark }: {
-  isDark: boolean;
-  setIsDark: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
-  const [menuOpen, setMenuOpen] = useState(false);
+const AVATAR = { src: "https://github.com/smngs.png", alt: "@smngs", href: "#/" };
+
+function Hero() {
+  return (
+    <>
+      <h1>@smngs/ui</h1>
+      <p>A Radix UI-based design system — 36 components</p>
+      <div className="row">
+        <Badge asChild><a href="https://radix-ui.com" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faCube} /> Radix UI</a></Badge>
+        <Badge asChild><a href="https://www.typescriptlang.org" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faTypescript} /> TypeScript</a></Badge>
+        <Badge asChild><a href="https://react.dev" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faReact} /> React 18</a></Badge>
+      </div>
+    </>
+  );
+}
+
+function AppContent() {
+  const { isDark, toggleTheme } = useTheme();
   const location = useLocation();
+  const isHome = location.pathname === "/";
+
+  const navContents = (
+    <>
+      <NavbarTitle asChild>
+        <Link to="/">@smngs/ui</Link>
+      </NavbarTitle>
+      <NavbarRight>
+        <NavbarLinks>
+          {/* Bare anchors inherit the link colour, which is the brand colour the
+              bar is painted in — use the nav button variants instead. */}
+          <Button variant={location.pathname === "/components" ? "nav-active" : "nav"} asChild>
+            <Link to="/components">Components</Link>
+          </Button>
+          <Button variant={location.pathname === "/demo" ? "nav-active" : "nav"} asChild>
+            <Link to="/demo">Demo</Link>
+          </Button>
+        </NavbarLinks>
+        <NavbarThemeToggle isDark={isDark} onToggle={toggleTheme} />
+        <NavbarHamburger />
+      </NavbarRight>
+      <NavbarMobileMenu>
+        <NavLink to="/components">Components</NavLink>
+        <NavLink to="/demo">Demo</NavLink>
+      </NavbarMobileMenu>
+    </>
+  );
 
   return (
-    <div className="layout">
+    <div className="smngs-layout">
+      {isHome ? (
+        <NavbarHeader avatar={AVATAR} hero={<Hero />}>
+          {navContents}
+        </NavbarHeader>
+      ) : (
+        <Navbar>
+          <a href="#/" className="smngs-navbar-brand">
+            <img className="smngs-navbar-avatar" src={AVATAR.src} alt={AVATAR.alt} />
+          </a>
+          {navContents}
+        </Navbar>
+      )}
       <Toc container=".page" refreshKey={location.pathname} />
       <div className="page">
-        <nav className="site-nav">
-          <Link to="/" className="nav-brand" onClick={() => setMenuOpen(false)}>
-            <Avatar src="https://github.com/smngs.png" fallback="SM" size="sm" />
-            <span className="nav-title">@smngs/ui</span>
-          </Link>
-          <div className="nav-right">
-            <div className="nav-links">
-              <NavLink to="/components">Components</NavLink>
-              <NavLink to="/demo">Demo</NavLink>
-            </div>
-            <button
-              className="theme-toggle"
-              onClick={() => setIsDark((d) => !d)}
-              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            >
-              <FontAwesomeIcon icon={isDark ? faSun : faMoon} />
-            </button>
-            <button
-              className="hamburger"
-              onClick={() => setMenuOpen((o) => !o)}
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-            >
-              <FontAwesomeIcon icon={menuOpen ? faXmark : faBars} />
-            </button>
-          </div>
-          {menuOpen && (
-            <div className="nav-mobile-menu">
-              <NavLink to="/components" onClick={() => setMenuOpen(false)}>Components</NavLink>
-              <NavLink to="/demo" onClick={() => setMenuOpen(false)}>Demo</NavLink>
-            </div>
-          )}
-        </nav>
 
         <Routes>
           <Route path="/" element={<HomePage isDark={isDark} />} />
@@ -63,30 +99,13 @@ function AppContent({ isDark, setIsDark }: {
 }
 
 export default function App() {
-  const [isDark, setIsDark] = useState(() =>
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  );
-
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.setAttribute("data-theme", "dark");
-    } else {
-      document.documentElement.removeAttribute("data-theme");
-    }
-  }, [isDark]);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const handler = (e: MediaQueryListEvent) => setIsDark(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
   return (
     <HashRouter>
-      <ToastProvider>
-        <AppContent isDark={isDark} setIsDark={setIsDark} />
-      </ToastProvider>
+      <ThemeProvider>
+        <ToastProvider>
+          <AppContent />
+        </ToastProvider>
+      </ThemeProvider>
     </HashRouter>
   );
 }

@@ -8,7 +8,7 @@ import { LayoutSection } from "../sections/LayoutSection";
 export function ComponentsPage({ isDark }: { isDark: boolean }) {
   return (
     <>
-      <div className="section" id="components">
+      <div className="smngs-section" id="components">
         <h1>Components</h1>
       </div>
       <DisplaySection isDark={isDark} />
