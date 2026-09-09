@@ -111,6 +111,38 @@ export function NavbarMobileMenu({
   );
 }
 
+/**
+ * A navbar control that navigates rather than acts — a language switch, a link
+ * out to a profile. An anchor, not a button, so it can be opened in a new tab
+ * and a crawler can follow it; it shares the theme toggle's styling so the
+ * controls in the bar match.
+ */
+export function NavbarIconLink({
+  href,
+  label,
+  children,
+  className = "",
+  ...props
+}: {
+  href: string;
+  /** Names the destination: the icon alone doesn't. */
+  label: string;
+  children: React.ReactNode;
+  className?: string;
+} & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "className">) {
+  return (
+    <a
+      href={href}
+      className={`smngs-navbar-icon-link ${className}`.trim()}
+      aria-label={label}
+      title={label}
+      {...props}
+    >
+      {children}
+    </a>
+  );
+}
+
 export function NavbarThemeToggle({
   isDark,
   onToggle,
