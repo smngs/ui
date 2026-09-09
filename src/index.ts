@@ -94,6 +94,10 @@ export {
   NavbarDropdownContent,
   useNavbarContext,
 } from "./components/navigation/Navbar";
+export { NavbarHeader } from "./components/navigation/NavbarHeader";
+export { Footer } from "./components/layout/Footer";
+export { ThemeProvider, useTheme } from "./components/theme/ThemeProvider";
+export { themeInitScript, THEME_STORAGE_KEY } from "./theme-script";
 export {
   Menubar,
   MenubarMenu,

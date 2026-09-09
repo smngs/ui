@@ -89,9 +89,21 @@
   --ease-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
   /* Layout */
+  /* One number decides how wide a page reads: the centre column of
+     .smngs-layout, and the content of the full-bleed brand bars that run above
+     and below it, so the navbar, the hero and the body text all line up on the
+     same edge. A site can pull the bars apart by setting
+     --smngs-navbar-max-width on its own. */
+  --smngs-layout-width: 60rem;
+  --smngs-navbar-max-width: var(--smngs-layout-width);
+  --nav-height: 4rem;
   --max-w-content: 70rem;
   --max-w-layout: 93.75rem;
-  --page-pad-x: 1.25rem;
+  /* The gutter between page content and the viewport edge — the navbar and
+     footer bars, the hero band and the page column all keep this much air, so
+     they stay flush with each other and none of them crowds the edge on a
+     screen narrower than --smngs-layout-width. */
+  --page-pad-x: 2rem;
   --header-pad-x: 0.625rem;
   --header-top: 0.625rem;
   --z-spacer: 999;
@@ -142,7 +154,7 @@
 
     /* Layout */
     --max-w-content: 100%;
-    --page-pad-x: 1rem;
+    --page-pad-x: 1.5rem;
     --header-pad-x: 0.5rem;
     --header-top: 0.5rem;
   }
