@@ -1057,14 +1057,17 @@ a.smngs-article-list-card:hover .smngs-article-list-card-image {
   font-size: var(--text-sm);
   padding: 0.6em 0.8em;
   line-height: 1;
+  text-decoration: none;
   transition: background-color var(--ease-fast);
 }
 .smngs-navbar-hamburger:hover {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Theme toggle button */
-.smngs-navbar-theme-toggle {
+/* Controls sitting at the right of the bar: the theme toggle, and any icon
+   link beside it. */
+.smngs-navbar-theme-toggle,
+.smngs-navbar-icon-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1078,8 +1081,10 @@ a.smngs-article-list-card:hover .smngs-article-list-card-image {
   line-height: 1;
   transition: background-color var(--ease-fast);
 }
-.smngs-navbar-theme-toggle:hover {
+.smngs-navbar-theme-toggle:hover,
+.smngs-navbar-icon-link:hover {
   background: rgba(255, 255, 255, 0.2);
+  color: var(--color-white);
 }
 
 /* ===== Layout ===== */
