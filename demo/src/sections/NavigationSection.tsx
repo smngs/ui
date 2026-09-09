@@ -21,7 +21,7 @@ export function NavigationSection({ isDark }: { isDark: boolean }) {
 
   return (
     <>
-      <div className="section" id="navigation">
+      <div className="smngs-section" id="navigation">
         <h2>Navigation</h2>
       </div>
 

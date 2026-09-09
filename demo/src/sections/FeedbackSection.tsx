@@ -9,7 +9,7 @@ export function FeedbackSection({ isDark }: { isDark: boolean }) {
 
   return (
     <>
-      <div className="section" id="feedback">
+      <div className="smngs-section" id="feedback">
         <h2>Feedback</h2>
       </div>
 

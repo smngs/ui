@@ -15,7 +15,7 @@ import { CodeBlock } from "../CodeBlock";
 export function OverlaySection({ isDark }: { isDark: boolean }) {
   return (
     <>
-      <div className="section" id="overlay">
+      <div className="smngs-section" id="overlay">
         <h2>Overlay</h2>
       </div>
 

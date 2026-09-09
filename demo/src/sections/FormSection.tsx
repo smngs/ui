@@ -21,7 +21,7 @@ export function FormSection({ isDark }: { isDark: boolean }) {
 
   return (
     <>
-      <div className="section" id="form">
+      <div className="smngs-section" id="form">
         <h2>Form</h2>
       </div>
 

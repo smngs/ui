@@ -24,7 +24,7 @@ export function LayoutSection({ isDark }: { isDark: boolean }) {
 
   return (
     <>
-      <div className="section" id="layout">
+      <div className="smngs-section" id="layout">
         <h2>Layout</h2>
       </div>
 
