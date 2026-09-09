@@ -3,6 +3,20 @@
 
 html {
   font-size: 100%;
+
+  /* Mobile browsers otherwise run a text-autosizing pass of their own whenever
+     the page is not at 100%, and the multiplier they pick is per block, derived
+     from its width — a full-width run of body copy gets inflated while text in
+     a narrow column beside it does not, so sizes end up inverted. Pinning this
+     leaves the rem scale as the only thing deciding relative sizes; the
+     reader's zoom still scales the whole page, just uniformly.
+
+     Safari implements only the -webkit- form. Build tools that autoprefix from
+     a browserslist (Lightning CSS, in Next.js and Vite) drop it unless the
+     consuming app declares one, so an app that wants this on iOS needs a
+     browserslist field — see the README. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {

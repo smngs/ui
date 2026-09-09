@@ -186,7 +186,28 @@ CSS custom properties defined in `tokens.css` can be used directly in your style
 | `--font-medium` | `500` |
 | `--font-bold` | `700` |
 
-> **Note:** Typography tokens assume `html { font-size: 62.5% }` (1rem = 10px).
+> **Note:** `styles.css` sets `html { font-size: 100% }`, so 1rem is the
+> reader's default size (16px unless they have changed it).
+
+### Responsive scale
+
+At `max-width: 768px` the root font size drops to `78.75%`. Every size token is
+in rem, so body copy, headings and spacing all scale by that one factor and the
+ratios between them are identical on mobile and desktop — crossing the
+breakpoint changes how big the page is, never how its elements relate to each
+other. Override `:root { font-size }` inside your own `@media (max-width: 768px)`
+block if a site wants a different mobile scale.
+
+`styles.css` also pins `text-size-adjust: 100%`, which stops mobile browsers
+running a text-autosizing pass that would inflate some blocks and not others.
+Safari implements only `-webkit-text-size-adjust`, and build tools that
+autoprefix from a browserslist (Lightning CSS, used by Next.js and Vite) drop
+that prefix unless the app declares one. **Add a `browserslist` field to your
+app's `package.json`** or the fix will not reach iOS:
+
+```json
+"browserslist": ["> 0.5%", "last 2 versions", "Firefox ESR", "not dead"]
+```
 
 ## Demo
 

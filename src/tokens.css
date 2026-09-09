@@ -128,17 +128,17 @@
 /* ===== Mobile overrides ===== */
 @media (max-width: 768px) {
   :root {
-    /* Spacing — tighter on small screens */
-    --space-5: 1.25rem;
-    --space-6: 1.5rem;
-    --space-7: 2rem;
-    --space-8: 3rem;
+    /* Type and spacing scale down together, driven by the root size alone.
+       Every size token above is in rem, so the ratios between body copy,
+       headings and spacing stay exactly as they are on desktop and only the
+       overall scale changes. Stepping individual tokens instead — headings
+       and spacing but not body copy, as this block used to — makes the
+       hierarchy shift rather than simply resize when a reader crosses the
+       breakpoint by rotating the device or zooming out.
 
-    /* Typography — only scale down headings */
-    --text-2xl: 1.25rem;
-    --text-3xl: 1.5rem;
-    --text-4xl: 1.875rem;
-    --text-5xl: 2.25rem;
+       A percentage rather than a px value, so a reader who has raised the
+       default font size in their browser still gets it scaled through. */
+    font-size: 78.75%;
 
     /* Layout */
     --max-w-content: 100%;
